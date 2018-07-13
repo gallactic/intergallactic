@@ -1,0 +1,3 @@
+--recursive
+--file test\web4.test.js
+--timeout 5000
