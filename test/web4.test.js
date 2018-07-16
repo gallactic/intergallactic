@@ -13,18 +13,21 @@ function instantiateWeb4 () {
  * @param {Function} test.function [A function that executes the test. it take test.input AND MUST RETURN PROMISE]
  * @param {Object} test.data.input [An object that contains test input value]
  * @param {Function} test.data.validate [A validator function to validate the test]
- * @param {Integer} count [a counter value of running test]
  * @param {Function} done [a callback to report mocha that the running test is completed]
+ * @param {Integer} count [a counter value of running test]
  */
-global.recursiveTest = function (test, count = 0, done) {
-  if (test.length === count) {
+global.recursiveTest = function (test, done, count = 0) {
+  if (test.data.length === count) {
     return done();
   }
 
   test.function(test.data[count].input)
     .then(output => {
-      test.data[count].validate(output);
-      global.recursiveTest(++count);
+      test.validate(output);
+      if (test.data[count].validate) {
+        test.data[count].validate(output);
+      }
+      global.recursiveTest(test, done, ++count);
     })
     .catch(done);
 }
@@ -55,7 +58,7 @@ describe('Web4', function () {
   });
 
   it('should have "txn" property', function () {
-    expect(web4.txn).to.be.an('object');
+    expect(web4.txn).to.be.a('function');
   });
 
   it('should have "gltc" property', function () {
