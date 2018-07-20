@@ -16,21 +16,31 @@ function instantiateWeb4 () {
  * @param {Function} done [a callback to report mocha that the running test is completed]
  * @param {Integer} count [a counter value of running test]
  */
-global.recursiveTest = function (test, done, count = 0) {
+global.runTest = function (test, done, count = 0) {
   if (test.data.length === count) {
     return done();
   }
 
-  test.function(test.data[count].input)
-    .then(output => {
-      test.validate(output);
-      if (test.data[count].validate) {
-        test.data[count].validate(output);
-      }
-      global.recursiveTest(test, done, ++count);
-    })
-    .catch(done);
-}
+  let beforeTest = test.before ? test.before(count) : Promise.resolve();
+  let res = beforeTest
+    .then(() => test.function(test.data[count].input));
+  if (res.then && typeof res.then === 'function') {
+    res
+      .then(output => {
+        test.validate(output, count);
+        if (test.data[count].validate) {
+          test.data[count].validate(output);
+        }
+        global.runTest(test, done, ++count);
+      })
+      .catch(done);
+  } else {
+    test.validate(res);
+    if (test.data[count].validate) {
+      test.data[count].validate(res);
+    }
+  }
+};
 
 before('instantiate web4', function () {
   instantiateWeb4();
@@ -57,12 +67,12 @@ describe('Web4', function () {
     expect(web4.account).to.be.an('object');
   });
 
-  it('should have "txn" property', function () {
-    expect(web4.txn).to.be.a('function');
-  });
-
   it('should have "gltc" property', function () {
     expect(web4.gltc).to.be.an('object');
+  });
+
+  it('should have "Txn" property', function () {
+    expect(web4.Txn).to.be.a('function');
   });
 
   it('should have "util" property', function () {
