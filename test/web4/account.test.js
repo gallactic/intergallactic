@@ -42,7 +42,7 @@ describe('Web4.account', function () {
       input: {}
     }]
 
-    global.recursiveTest(test, done);
+    global.runTest(test, done);
   });
 
   it('"getAccount", should return account details', function (done) {
@@ -74,7 +74,7 @@ describe('Web4.account', function () {
       }
     }],
 
-    global.recursiveTest(test, done);
+    global.runTest(test, done);
   });
 
   it('"getStorage", should return storage details', function (done) {
@@ -96,7 +96,7 @@ describe('Web4.account', function () {
       }
     }]
 
-    global.recursiveTest(test, done);
+    global.runTest(test, done);
   });
 
   it('"getStorageAt", should return storage details', function (done) {
@@ -117,6 +117,6 @@ describe('Web4.account', function () {
       }
     }]
 
-    global.recursiveTest(test, done);
+    global.runTest(test, done);
   });
 });
