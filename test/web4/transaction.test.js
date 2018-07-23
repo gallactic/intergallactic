@@ -18,7 +18,11 @@ describe('Web4.Txn', function () {
 
   it('should have "Web4" object upon instantiate', function () {
     expect(newTxn.Web4).to.be.an('object');
-  })
+  });
+
+  it('should have "signSync" function upon instantiate', function () {
+    expect(newTxn.signSync).to.be.a('function');
+  });
 
   it('should have "sign" function upon instantiate', function () {
     expect(newTxn.sign).to.be.a('function');
@@ -29,18 +33,108 @@ describe('Web4.Txn', function () {
   });
 
   it('should have "signNSend" function upon instantiate', function () {
-    expect(newTxn.sign).to.be.a('function');
+    expect(newTxn.signNSend).to.be.a('function');
   });
 
   it('should have "call" function upon instantiate', function () {
-    expect(newTxn.send).to.be.a('function');
+    expect(newTxn.call).to.be.a('function');
   });
 
   it('should have "signNCall" function upon instantiate', function () {
-    expect(newTxn.send).to.be.a('function');
+    expect(newTxn.signNCall).to.be.a('function');
   });
 
-  it('"sign",should sign the transaction based and return the signed transaction object', function (done) {
+  it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
+    const test = {
+      function: function (data) {
+        const newTxn = new web4.Txn(data.txn, data.opt);
+        return newTxn.signSync(data.privKey);
+      },
+      validate: function (res) {
+        expect(res).to.be.a('string');
+      }
+    };
+    test.data = [{
+      input: {
+        privKey: testAcc.privKey,
+        opt: {
+          type: 1,
+          chainId: 'Gallactica-Chain88291',
+          sequence: 300
+        },
+        txn: {
+          inputs: [{
+            address: testAcc.address,
+            amount: 10
+          }],
+          outputs: [{
+            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
+            amount: 10
+          }]
+        }
+      }
+    }, {
+      input: {
+        privKey: testAcc.privKey,
+        opt: {
+          type: 2,
+          chainId: 'Gallactica-Chain88291',
+          sequence: 300
+        },
+        txn: {
+          address: testAcc.address,
+          data: {},
+          fee: 1,
+          gas_limit: 1,
+
+          input: {
+            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B', // source address
+            amount: 1
+          }
+        }
+      }
+    }]
+
+    global.runTest(test, done);
+  });
+
+  it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
+    const test = {
+      function: function (data) {
+        const newTxn = new web4.Txn(data.txn, data.opt);
+        try {
+          newTxn.signSync(data.privKey);
+        } catch (e) {
+          return Promise.resolve(e);
+        }
+      },
+      validate: function (res) {
+        expect(res).to.be.a('error');
+        expect(res.message).to.equal('Chain id or sequence is not defined. Synchronous sign require chainId and sequence as parameter upon instantiate');
+      }
+    };
+    test.data = [{
+      input: {
+        privKey: testAcc.privKey,
+        opt: {
+          type: 1
+        },
+        txn: {}
+      }
+    }, {
+      input: {
+        privKey: testAcc.privKey,
+        opt: {
+          type: 2
+        },
+        txn: {}
+      }
+    }]
+
+    global.runTest(test, done);
+  });
+
+  it('"sign",should sign the transaction and return the signed transaction object', function (done) {
     const test = {
       function: function (data) {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
