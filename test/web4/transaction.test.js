@@ -1,7 +1,8 @@
 'use strict';
 
-const Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
-const expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var globalOrWindow = (typeof window !== 'undefined' ? window : global);
 
 const testAcc = {
   address: '406894F316F95DC83BFD2F6418BE0CC31C3163A0',
@@ -95,7 +96,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
@@ -109,7 +110,6 @@ describe('Web4.Txn', function () {
         }
       },
       validate: function (res) {
-        expect(res).to.be.a('error');
         expect(res.message).to.equal('Chain id or sequence is not defined. Synchronous sign require chainId and sequence as parameter upon instantiate');
       }
     };
@@ -131,7 +131,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
@@ -177,7 +177,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it.skip('"send", should send the transaction', function (done) {
@@ -215,7 +215,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done)
+    globalOrWindow.runTest(test, done)
   });
 
   it.skip('"signNSend", should sign the transaction and do send process', function (done) {
@@ -249,7 +249,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it.skip('"call", should call the given transaction', function (done) {
@@ -288,7 +288,7 @@ describe('Web4.Txn', function () {
         }
       }
     }];
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it.skip('"signNCall", should sign the transaction and do send process', function (done) {
@@ -323,6 +323,6 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 });

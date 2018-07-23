@@ -1,7 +1,8 @@
 'use strict';
 
-const Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
-const expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var globalOrWindow = (typeof window !== 'undefined' ? window : global);
 
 before('instantiate web4', function () {
   new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
@@ -42,7 +43,7 @@ describe('Web4.account', function () {
       input: {}
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it('"getAccount", should return account details', function (done) {
@@ -74,7 +75,7 @@ describe('Web4.account', function () {
       }
     }],
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it('"getStorage", should return storage details', function (done) {
@@ -96,7 +97,7 @@ describe('Web4.account', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 
   it('"getStorageAt", should return storage details', function (done) {
@@ -117,6 +118,6 @@ describe('Web4.account', function () {
       }
     }]
 
-    global.runTest(test, done);
+    globalOrWindow.runTest(test, done);
   });
 });
