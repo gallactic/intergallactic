@@ -17,10 +17,6 @@ describe('Web4.Txn', function () {
   const web4 = new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
   const newTxn = new web4.Txn({}, { type: 1 });
 
-  it('should have "Web4" object upon instantiate', function () {
-    expect(newTxn.Web4).to.be.an('object');
-  });
-
   it('should have "signSync" function upon instantiate', function () {
     expect(newTxn.signSync).to.be.a('function');
   });
@@ -47,11 +43,11 @@ describe('Web4.Txn', function () {
 
   it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, data.opt);
         return newTxn.signSync(data.privKey);
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res).to.be.a('string');
       }
     };
@@ -101,7 +97,7 @@ describe('Web4.Txn', function () {
 
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, data.opt);
         try {
           newTxn.signSync(data.privKey);
@@ -109,7 +105,7 @@ describe('Web4.Txn', function () {
           return Promise.resolve(e);
         }
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res.message).to.equal('Chain id or sequence is not defined. Synchronous sign require chainId and sequence as parameter upon instantiate');
       }
     };
@@ -136,11 +132,11 @@ describe('Web4.Txn', function () {
 
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey);
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res).to.be.a('string');
       }
     };
@@ -182,14 +178,14 @@ describe('Web4.Txn', function () {
 
   it.skip('"send", should send the transaction', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             return newTxn.send(signature, data.pubKey);
           });
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
@@ -220,11 +216,11 @@ describe('Web4.Txn', function () {
 
   it.skip('"signNSend", should sign the transaction and do send process', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.signNSend(data.privateKey);
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
@@ -254,15 +250,14 @@ describe('Web4.Txn', function () {
 
   it.skip('"call", should call the given transaction', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             return newTxn.call(signature, data.pubKey);
           });
       },
-      validate: function (res) {
-        console.log(res);
+      validate: (res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
@@ -293,11 +288,11 @@ describe('Web4.Txn', function () {
 
   it.skip('"signNCall", should sign the transaction and do send process', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.signNCall(data.privKey);
       },
-      validate: function (res) {
+      validate: (res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');

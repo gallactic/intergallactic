@@ -22,23 +22,23 @@ globalOrWindow.runTest = function (test, done, count = 0) {
     return done();
   }
 
-  let beforeTest = test.before ? test.before(count) : Promise.resolve();
+  let beforeTest = test.before ? test.before(test.data[count].input) : Promise.resolve();
   let res = beforeTest
     .then(() => test.function(test.data[count].input));
   if (res.then && typeof res.then === 'function') {
     res
       .then(output => {
-        test.validate(output, count);
+        test.validate(output, test.data[count].input);
         if (test.data[count].validate) {
-          test.data[count].validate(output);
+          test.data[count].validate(output, test.data[count].input);
         }
         globalOrWindow.runTest(test, done, ++count);
       })
       .catch(done);
   } else {
-    test.validate(res);
+    test.validate(res, test.data[count].input);
     if (test.data[count].validate) {
-      test.data[count].validate(res);
+      test.data[count].validate(res, test.data[count].input);
     }
     globalOrWindow.runTest(test, done, ++count);
   }

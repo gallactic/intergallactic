@@ -29,7 +29,7 @@ describe('Web4.account', function () {
 
   it('"listAccounts", should return account details', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         return web4.account.listAccounts(data.address)
       },
       validate: function (res) {
@@ -48,7 +48,7 @@ describe('Web4.account', function () {
 
   it('"getAccount", should return account details', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         return web4.account.getAccount(data.address);
       },
       validate: (res) => {
@@ -80,7 +80,7 @@ describe('Web4.account', function () {
 
   it('"getStorage", should return storage details', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         return web4.account.getStorage(data.address);
       },
       validate: (res) => {
@@ -102,7 +102,7 @@ describe('Web4.account', function () {
 
   it('"getStorageAt", should return storage details', function (done) {
     const test = {
-      function: function (data) {
+      function: (data) => {
         return web4.account.getStorageAt(data.address, data.key);
       },
       validate: (res) => {
