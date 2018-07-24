@@ -31,9 +31,9 @@ describe('Web4.gltc', function () {
     expect(web4.gltc.getBlockTxns).to.be.a('function');
   });
 
-  it('"getChainId", should return ', function (done) {
+  it('"getChainId", should return chain info including ChainId', function (done) {
     const test = {
-      function: () => {
+      function: (data) => {
         return web4.gltc.getChainId();
       },
       validate: (res) => {
@@ -50,9 +50,9 @@ describe('Web4.gltc', function () {
     }]
 
     globalOrWindow.runTest(test, done);
-  })
+  });
 
-  it('"getInfo", should return ', function (done) {
+  it('"getInfo", should return node information', function (done) {
     const test = {
       function: (data) => {
         return web4.gltc.getInfo();
@@ -78,7 +78,7 @@ describe('Web4.gltc', function () {
     globalOrWindow.runTest(test, done);
   });
 
-  it('"getLatestBlock", should return ', function (done) {
+  it('"getLatestBlock", should return node infor including latest block info', function (done) {
     const test = {
       function: (data) => {
         return web4.gltc.getInfo();
@@ -104,7 +104,7 @@ describe('Web4.gltc', function () {
     globalOrWindow.runTest(test, done);
   });
 
-  it('"getBlock", should return ', function (done) {
+  it('"getBlock", should return block info given a block height', function (done) {
     const test = {
       before: (data) => {
         return web4.gltc.getInfo()
@@ -132,7 +132,7 @@ describe('Web4.gltc', function () {
     globalOrWindow.runTest(test, done);
   });
 
-  it('"getBlockTxns", should return ', function (done) {
+  it('"getBlockTxns", should return list of block transactions', function (done) {
     const test = {
       before: (data) => {
         return web4.gltc.getInfo()
@@ -144,7 +144,6 @@ describe('Web4.gltc', function () {
         return web4.gltc.getBlockTxns(data.height);
       },
       validate: (res, input) => {
-        console.log(res);
         expect(res.statusCode).to.equal(200);
         expect(res).to.be.an('object');
         expect(res.body.result).to.be.an('object');

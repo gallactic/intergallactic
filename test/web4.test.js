@@ -22,10 +22,12 @@ globalOrWindow.runTest = function (test, done, count = 0) {
     return done();
   }
 
-  let beforeTest = test.before ? test.before(test.data[count].input) : Promise.resolve();
-  let res = beforeTest
-    .then(() => test.function(test.data[count].input));
-  if (res.then && typeof res.then === 'function') {
+  let beforeTest = test.before ? test.before(test.data[count].input) : null;
+  let res = beforeTest && typeof beforeTest.then === 'function' ?
+    beforeTest.then(() => test.function(test.data[count].input)) :
+    test.function(test.data[count].input);
+
+  if (res && typeof res.then === 'function') {
     res
       .then(output => {
         test.validate(output, test.data[count].input);
@@ -77,13 +79,17 @@ describe('Web4', function () {
     expect(web4.Txn).to.be.a('function');
   });
 
-  it('should have "util" property', function () {
-    expect(web4.util).to.be.an('object');
+  it('should have "utils" property', function () {
+    expect(web4.utils).to.be.an('object');
   });
 
   it('should have "version" property', function () {
     expect(web4.version).to.be.an('object');
   });
+
+  // it('should have "isConnected" function', function () {
+  //   expect(web4.isConnected)
+  // })
 });
 
 describe('Web4.setConnection', function () {
