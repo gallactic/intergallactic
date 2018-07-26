@@ -5,7 +5,7 @@ var expect = typeof window !== 'undefined' ? window.expect : require('chai').exp
 var globalOrWindow = (typeof window !== 'undefined' ? window : global);
 
 function instantiateWeb4 () {
-  return new Web4({ url: 'http://localhost:5050', protocol: 'jsonrpc' });
+  return new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
 }
 
 /**
@@ -95,8 +95,8 @@ describe('Web4', function () {
 describe('Web4.setConnection', function () {
   const web4 = instantiateWeb4();
 
-  it('should set web4.conn property and return connection object', function () {
-    expect(web4.setConnection('http://localhost:4040', 'jsonrpc')).to.be.an('object');
-    expect(web4.conn.url).to.equal('http://localhost:4040');
+  it('should set web4.conn property and return json rpc connection object', function () {
+    expect(web4.setConnection('http://54.95.41.253:1337/rpc', 'jsonrpc')).to.be.an('object');
+    expect(web4.conn.url).to.equal('http://54.95.41.253:1337/rpc');
   });
 });
