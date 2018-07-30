@@ -12,6 +12,23 @@ To use intergallactic in Node.js, just ```require``` it:
 
 ```js
 var intergallactic = require('intergallactic');
+intergallactic.gltc.getInfo()
+  .then(res => {
+    /**
+    res: {
+      statusCode: 200,
+      body: {
+        result: {
+          ChainName: 'test-chain',
+          ChainId: 'test-chain-DA704F',
+          GenesisHash: '<HASH VALUE>'
+        },
+        id: 'bd09dbba-840b-61f4-3385-1f6d20b75476',
+        jsonrpc: '2.0'
+      }
+    }
+    */
+  })
 ```
 
 A minified, browserified file ```dist/intergallactic.min.js``` is included for use in the browser. Including this file simply attaches ```Intergallactic``` object to ```window```:
