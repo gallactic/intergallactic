@@ -79,15 +79,16 @@ describe('Web4.Txn', function () {
           sequence: 300
         },
         txn: {
-          address: testAcc.address,
-          data: {},
-          fee: 1,
-          gas_limit: 1,
-
-          sender: {
-            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj', // source address
-            amount: 1
-          }
+          caller: {
+            address: testAcc.address,
+            amount: 10
+          },
+          callee: {
+            address: '',
+            amount: 10
+          },
+          gasLimit: 1,
+          data: '010203'
         }
       }
     }]
@@ -162,15 +163,16 @@ describe('Web4.Txn', function () {
         privKey: testAcc.privKey,
         txnType: 2,
         txn: {
-          address: testAcc.address,
-          data: {},
-          fee: 1,
-          gas_limit: 1,
-
-          sender: {
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B', // source address
-            amount: 1
-          }
+          caller: {
+            address: testAcc.address,
+            amount: 10
+          },
+          callee: {
+            address: '',
+            amount: 10
+          },
+          gasLimit: 1,
+          data: '010203'
         }
       }
     }]
@@ -250,17 +252,20 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    this.timeout(50000);
+    this.timeout(5000);
     setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it.skip('"call", should call the given transaction', function (done) {
+  it('"call", should call the given transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
-            return newTxn.call(signature, data.pubKey);
+            const signatories = [{
+              signature, publicKey: data.pubKey
+            }]
+            return newTxn.call(signatories);
           });
       },
       validate: (res) => {
@@ -268,7 +273,7 @@ describe('Web4.Txn', function () {
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
         expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(40);
+        expect(res.body.result.TxHash.length).to.equal(28);
       }
     };
     test.data = [{
@@ -277,22 +282,24 @@ describe('Web4.Txn', function () {
         pubKey: testAcc.pubKey,
         txnType: 2,
         txn: {
-          address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
-          amount: 10,
-          data: {},
-          fee: 1,
-          gas_limit: 1,
-          input: {
+          caller: {
             address: testAcc.address,
             amount: 10
-          }
+          },
+          callee: {
+            address: '',
+            amount: 10
+          },
+          gasLimit: 1,
+          data: '010203' // currently require an input of byte array
         }
       }
     }];
-    glOrWd.runTest(test, done);
+    this.timeout(5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it.skip('"signNCall", should sign the transaction and do send process', function (done) {
+  it('"signNCall", should sign the transaction and do send process', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
@@ -303,7 +310,7 @@ describe('Web4.Txn', function () {
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
         expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(40);
+        expect(res.body.result.TxHash.length).to.equal(28);
       }
     };
     test.data = [{
@@ -311,19 +318,21 @@ describe('Web4.Txn', function () {
         privKey: testAcc.privKey,
         txnType: 2,
         txn: {
-          address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
-          amount: 10,
-          data: {},
-          fee: 1,
-          gas_limit: 1,
-          input: {
+          caller: {
             address: testAcc.address,
             amount: 10
-          }
+          },
+          callee: {
+            address: '',
+            amount: 10
+          },
+          gasLimit: 1,
+          data: '010203' // currently require an input of byte array
         }
       }
     }]
 
-    glOrWd.runTest(test, done);
+    this.timeout(5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 });
