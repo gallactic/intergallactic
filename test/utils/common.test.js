@@ -75,111 +75,111 @@ describe('web4.utils.util', function () {
     test.data = [
       {
         input: { number: 1 },
-        validate: (output) => expect(output.toString()).to.equal('1')
+        validate: (output) => expect(output.toNumber()).to.equal(1)
       },
       {
         input: { number: '1' },
-        validate: (output) => expect(output.toString()).to.equal('1')
+        validate: (output) => expect(output.toNumber()).to.equal(1)
       },
       {
         input: { number: '0x1' },
-        validate: (output) => expect(output.toString()).to.equal('1')
+        validate: (output) => expect(output.toNumber()).to.equal(1)
       },
       {
         input: { number: '0x01' },
-        validate: (output) => expect(output.toString()).to.equal('1')
+        validate: (output) => expect(output.toNumber()).to.equal(1)
       },
       {
         input: { number: 15 },
-        validate: (output) => expect(output.toString()).to.equal('15')
+        validate: (output) => expect(output.toNumber()).to.equal(15)
       },
       {
         input: { number: '15' },
-        validate: (output) => expect(output.toString()).to.equal('15')
+        validate: (output) => expect(output.toNumber()).to.equal(15)
       },
       {
         input: { number: '0xf' },
-        validate: (output) => expect(output.toString()).to.equal('15')
+        validate: (output) => expect(output.toNumber()).to.equal(15)
       },
       {
         input: { number: new BigNumber('f', 16) },
-        validate: (output) => expect(output.toString()).to.equal('15')
+        validate: (output) => expect(output.toNumber()).to.equal(15)
       },
       {
         input: { number: -1 },
-        validate: (output) => expect(output.toString()).to.equal('-1')
+        validate: (output) => expect(output.toNumber()).to.equal(-1)
       },
       {
         input: { number: '-1' },
-        validate: (output) => expect(output.toString()).to.equal('-1')
+        validate: (output) => expect(output.toNumber()).to.equal(-1)
       },
       {
         input: { number: '-0x1' },
-        validate: (output) => expect(output.toString()).to.equal('-1')
+        validate: (output) => expect(output.toNumber()).to.equal(-1)
       },
       {
         input: { number: '-0x01' },
-        validate: (output) => expect(output.toString()).to.equal('-1')
+        validate: (output) => expect(output.toNumber()).to.equal(-1)
       },
       {
         input: { number: -15 },
-        validate: (output) => expect(output.toString()).to.equal('-15')
+        validate: (output) => expect(output.toNumber()).to.equal(-15)
       },
       {
         input: { number: '-15' },
-        validate: (output) => expect(output.toString()).to.equal('-15')
+        validate: (output) => expect(output.toNumber()).to.equal(-15)
       },
       {
         input: { number: '-0xf' },
-        validate: (output) => expect(output.toString()).to.equal('-15')
+        validate: (output) => expect(output.toNumber()).to.equal(-15)
       },
       {
         input: { number: '-0x0f' },
-        validate: (output) => expect(output.toString()).to.equal('-15')
+        validate: (output) => expect(output.toNumber()).to.equal(-15)
       },
       {
         input: { number: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' },
-        validate: (output) => expect(output.toString()).to.equal('115792089237316195423570985008687907853269984665640564039457584007913129639935')
+        validate: (output) => expect(output.toNumber()).to.equal(115792089237316195423570985008687907853269984665640564039457584007913129639935)
       },
       {
         input: { number: '0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd' },
-        validate: (output) => expect(output.toString()).to.equal('115792089237316195423570985008687907853269984665640564039457584007913129639933')
+        validate: (output) => expect(output.toNumber()).to.equal(115792089237316195423570985008687907853269984665640564039457584007913129639933)
       },
       {
         input: { number: '-0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff' },
-        validate: (output) => expect(output.toString()).to.equal('-115792089237316195423570985008687907853269984665640564039457584007913129639935')
+        validate: (output) => expect(output.toNumber()).to.equal(-115792089237316195423570985008687907853269984665640564039457584007913129639935)
       },
       {
         input: { number: '-0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd' },
-        validate: (output) => expect(output.toString()).to.equal('-115792089237316195423570985008687907853269984665640564039457584007913129639933')
+        validate: (output) => expect(output.toNumber()).to.equal(-115792089237316195423570985008687907853269984665640564039457584007913129639933)
       },
       {
         input: { number: 0 },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: '0' },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: '0x0' },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: -0 },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: '-0' },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: '-0x0' },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
       {
         input: { number: new BigNumber(0) },
-        validate: (output) => expect(output.toString()).to.equal('0')
+        validate: (output) => expect(output.toNumber()).to.equal(0)
       },
     ]
     glOrWd.runTest(test, done);
