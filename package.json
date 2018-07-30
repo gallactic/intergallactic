@@ -1,13 +1,19 @@
 {
-  "name": "Intergallactic",
+  "name": "intergallactic",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "webpack && mocha"
   },
-  "author": "Josef Wijaya",
+  "author": "Josef Wijaya <josefwijaya@outlook.com>",
   "license": "MIT",
+  "keywords": [
+    "gallactic",
+    "gallactic.js",
+    "gallactic js",
+    "intergallactic",
+  ],
   "devDependencies": {
     "chai": "4.1.2",
     "mocha": "5.2.0",
