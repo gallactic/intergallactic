@@ -2,19 +2,19 @@
 
 var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
-var globalOrWindow = (typeof window !== 'undefined' ? window : global);
+var glOrWd = (typeof window !== 'undefined' ? window : global);
 
 const testAcc = {
-  address: '406894F316F95DC83BFD2F6418BE0CC31C3163A0',
+  address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY',
   privKey: 'B3F4AE2C242ACEE2374C49990DD196361A88B25EDA473947A381830B3B4D418F2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF',
   pubKey: '2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF'
 }
 before('instantiate web4', function () {
-  new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+  new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
 describe('Web4.Txn', function () {
-  const web4 = new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
   const newTxn = new web4.Txn({}, { type: 1 });
 
   it('should have "signSync" function upon instantiate', function () {
@@ -60,12 +60,12 @@ describe('Web4.Txn', function () {
           sequence: 300
         },
         txn: {
-          inputs: [{
+          senders: [{
             address: testAcc.address,
             amount: 10
           }],
-          outputs: [{
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
+          receivers: [{
+            address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
             amount: 10
           }]
         }
@@ -84,15 +84,15 @@ describe('Web4.Txn', function () {
           fee: 1,
           gas_limit: 1,
 
-          input: {
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B', // source address
+          sender: {
+            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj', // source address
             amount: 1
           }
         }
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
@@ -127,7 +127,7 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
@@ -141,21 +141,23 @@ describe('Web4.Txn', function () {
       }
     };
     test.data = [{
+      // send transaction data
       input: {
         privKey: testAcc.privKey,
         txnType: 1,
         txn: {
-          inputs: [{
+          senders: [{
             address: testAcc.address,
             amount: 10
           }],
-          outputs: [{
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
+          receivers: [{
+            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
             amount: 10
           }]
         }
       }
     }, {
+      // call transaction data
       input: {
         privKey: testAcc.privKey,
         txnType: 2,
@@ -165,7 +167,7 @@ describe('Web4.Txn', function () {
           fee: 1,
           gas_limit: 1,
 
-          input: {
+          sender: {
             address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B', // source address
             amount: 1
           }
@@ -173,16 +175,19 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
-  it.skip('"send", should send the transaction', function (done) {
+  it('"send", should send the transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
-            return newTxn.send(signature, data.pubKey);
+            const signatories = [{
+              signature, publicKey: data.pubKey
+            }]
+            return newTxn.send(signatories);
           });
       },
       validate: (res) => {
@@ -190,7 +195,7 @@ describe('Web4.Txn', function () {
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
         expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(40);
+        expect(res.body.result.TxHash.length).to.equal(28);
       }
     };
     test.data = [{
@@ -199,22 +204,22 @@ describe('Web4.Txn', function () {
         pubKey: testAcc.pubKey,
         txnType: 1,
         txn: {
-          inputs: [{
+          senders: [{
             address: testAcc.address,
             amount: 10
           }],
-          outputs: [{
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
+          receivers: [{
+            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
             amount: 10
           }]
         }
       }
     }]
 
-    globalOrWindow.runTest(test, done)
+    glOrWd.runTest(test, done)
   });
 
-  it.skip('"signNSend", should sign the transaction and do send process', function (done) {
+  it('"signNSend", should sign the transaction and do send process', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new web4.Txn(data.txn, { type: data.txnType });
@@ -225,7 +230,7 @@ describe('Web4.Txn', function () {
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
         expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(40);
+        expect(res.body.result.TxHash.length).to.equal(28);
       }
     };
     test.data = [{
@@ -233,19 +238,20 @@ describe('Web4.Txn', function () {
         privateKey: testAcc.privKey,
         txnType: 1,
         txn: {
-          inputs: [{
+          senders: [{
             address: testAcc.address,
             amount: 10
           }],
-          outputs: [{
-            address: '008AEEDA4D805471DF9B2A5B0F38A0C3BCBA786B',
+          receivers: [{
+            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
             amount: 10
           }]
         }
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    this.timeout(50000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
   it.skip('"call", should call the given transaction', function (done) {
@@ -283,7 +289,7 @@ describe('Web4.Txn', function () {
         }
       }
     }];
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it.skip('"signNCall", should sign the transaction and do send process', function (done) {
@@ -318,6 +324,6 @@ describe('Web4.Txn', function () {
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 });

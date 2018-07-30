@@ -2,7 +2,8 @@
 
 var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
-var globalOrWindow = (typeof window !== 'undefined' ? window : global);
+var glOrWd = (typeof window !== 'undefined' ? window : global);
+glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 
 function instantiateWeb4 () {
   return new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
@@ -17,7 +18,7 @@ function instantiateWeb4 () {
  * @param {Function} done [a callback to report mocha that the running test is completed]
  * @param {Integer} count [a counter value of running test]
  */
-globalOrWindow.runTest = function (test, done, count = 0) {
+glOrWd.runTest = function (test, done, count = 0) {
   if (test.data.length === count) {
     return done();
   }
@@ -34,7 +35,7 @@ globalOrWindow.runTest = function (test, done, count = 0) {
         if (test.data[count].validate) {
           test.data[count].validate(output, test.data[count].input);
         }
-        globalOrWindow.runTest(test, done, ++count);
+        glOrWd.runTest(test, done, ++count);
       })
       .catch(done);
   } else {
@@ -42,7 +43,7 @@ globalOrWindow.runTest = function (test, done, count = 0) {
     if (test.data[count].validate) {
       test.data[count].validate(res, test.data[count].input);
     }
-    globalOrWindow.runTest(test, done, ++count);
+    glOrWd.runTest(test, done, ++count);
   }
 };
 

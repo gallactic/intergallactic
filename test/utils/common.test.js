@@ -3,10 +3,10 @@
 var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
-var globalOrWindow = (typeof window !== 'undefined' ? window : global);
+var glOrWd = (typeof window !== 'undefined' ? window : global);
 
-describe('web4.utils', function () {
-  const web4 = new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+describe('web4.utils.util', function () {
+  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
   it('should have "generateUuid" function', function () {
     expect(web4.utils.util.generateUuid).to.be.a('function');
   });
@@ -34,7 +34,7 @@ describe('web4.utils', function () {
         input: {}
       }
     ]
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"isBigNumber" should return a boolean', function (done) {
@@ -60,7 +60,7 @@ describe('web4.utils', function () {
         }
       }
     ]
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"toBigNumber" should return a big number based on given value', function (done) {
@@ -182,6 +182,6 @@ describe('web4.utils', function () {
         validate: (output) => expect(output.toString()).to.equal('0')
       },
     ]
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 });

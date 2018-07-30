@@ -2,14 +2,14 @@
 
 var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
-var globalOrWindow = (typeof window !== 'undefined' ? window : global);
+var glOrWd = (typeof window !== 'undefined' ? window : global);
 
 before('instantiate web4', function () {
-  new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+  new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
 describe('Web4.account', function () {
-  const web4 = new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "listAccounts" func', function () {
     expect(web4.account.listAccounts).to.be.a('function');
@@ -43,7 +43,7 @@ describe('Web4.account', function () {
       input: {}
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"getAccount", should return account details', function (done) {
@@ -61,21 +61,21 @@ describe('Web4.account', function () {
 
     test.data = [{
       input: {
-        address: '4B1207BBB80CDE31C155CB3C5EABE9DBC3E0EAC2'
+        address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY'
       },
       validate: (res) => {
-        expect(res.body.result.Account.Address).to.equal('4B1207BBB80CDE31C155CB3C5EABE9DBC3E0EAC2');
+        expect(res.body.result.Account.address).to.equal('acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY');
       }
     }, {
       input: {
-        address: 'F67B603188441B53AD8C073E121CA1FF724230EF'
+        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua'
       },
       validate: (res) => {
-        expect(res.body.result.Account.Address).to.equal('F67B603188441B53AD8C073E121CA1FF724230EF');
+        expect(res.body.result.Account.address).to.equal('acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua');
       }
     }],
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"getStorage", should return storage details', function (done) {
@@ -93,11 +93,11 @@ describe('Web4.account', function () {
     };
     test.data = [{
       input: {
-        address: 'F67B603188441B53AD8C073E121CA1FF724230EF'
+        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua'
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 
   it('"getStorageAt", should return storage details', function (done) {
@@ -113,11 +113,11 @@ describe('Web4.account', function () {
     };
     test.data = [{
       input: {
-        address: 'F67B603188441B53AD8C073E121CA1FF724230EF',
+        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua',
         key: 'greeting'
       }
     }]
 
-    globalOrWindow.runTest(test, done);
+    glOrWd.runTest(test, done);
   });
 });
