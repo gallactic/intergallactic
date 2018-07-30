@@ -19,6 +19,10 @@ function instantiateWeb4 () {
  * @param {Integer} count [a counter value of running test]
  */
 glOrWd.runTest = function (test, done, count = 0) {
+  if (!test.data) {
+    throw new Error('"runTest" require test data in order to run the test');
+  }
+
   if (test.data.length === count) {
     return done();
   }
