@@ -7,7 +7,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'web4.min.js',
-    library: 'Web4'
+    filename: 'intergallactic.min.js',
+    library: 'Intergallactic'
   }
 };

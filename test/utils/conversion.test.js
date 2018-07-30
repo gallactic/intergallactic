@@ -1,28 +1,28 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 
-describe('web4.utils.conversion', () => {
-  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+describe('igc.utils.conversion', () => {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "getUnit" function', () => {
-    expect(web4.utils.conversion.getUnitValue).to.be.a('function');
+    expect(igc.utils.conversion.getUnitValue).to.be.a('function');
   });
 
   it('should have "fromBoson" function', () => {
-    expect(web4.utils.conversion.fromBoson).to.be.a('function');
+    expect(igc.utils.conversion.fromBoson).to.be.a('function');
   });
 
   it('should have "toBoson" function', () => {
-    expect(web4.utils.conversion.toBoson).to.be.a('function');
+    expect(igc.utils.conversion.toBoson).to.be.a('function');
   });
 
   it('"getUnitValue" should return the "boson" value based on given unit', (done) => {
     const test = {
       function: (input) => {
-        return web4.utils.conversion.getUnitValue(input.unit)
+        return igc.utils.conversion.getUnitValue(input.unit)
       },
       validate: (output) => {
         expect(output).to.be.a('number');
@@ -51,10 +51,10 @@ describe('web4.utils.conversion', () => {
   it('"fromBoson" should convert boson value to given unit value', (done) => {
     const test = {
       function: (input) => {
-        return web4.utils.conversion.fromBoson(input.number, input.unit);
+        return igc.utils.conversion.fromBoson(input.number, input.unit);
       },
       validate: (output) => {
-        expect(web4.utils.util.isBigNumber(output)).to.equal(true);
+        expect(igc.utils.util.isBigNumber(output)).to.equal(true);
       }
     };
 
@@ -90,10 +90,10 @@ describe('web4.utils.conversion', () => {
   it('"toBoson" should convert value to given unit value', (done) => {
     const test = {
       function: (input) => {
-        return web4.utils.conversion.toBoson(input.number, input.unit);
+        return igc.utils.conversion.toBoson(input.number, input.unit);
       },
       validate: (output) => {
-        expect(web4.utils.util.isBigNumber(output)).to.equal(true);
+        expect(igc.utils.util.isBigNumber(output)).to.equal(true);
       }
     };
 

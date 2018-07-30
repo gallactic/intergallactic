@@ -1,28 +1,28 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 
-describe('web4.utils.util', function () {
-  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+describe('igc.utils.util', function () {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
   it('should have "generateUuid" function', function () {
-    expect(web4.utils.util.generateUuid).to.be.a('function');
+    expect(igc.utils.util.generateUuid).to.be.a('function');
   });
 
   it('should have "isBigNumber" function', function () {
-    expect(web4.utils.util.isBigNumber).to.be.a('function');
+    expect(igc.utils.util.isBigNumber).to.be.a('function');
   });
 
   it('should have "toBigNumber" function', function () {
-    expect(web4.utils.util.toBigNumber).to.be.a('function');
+    expect(igc.utils.util.toBigNumber).to.be.a('function');
   })
 
   it('"generateUuid" should return a string', function (done) {
     const test = {
       function: (data) => {
-        return web4.utils.util.generateUuid(data.length);
+        return igc.utils.util.generateUuid(data.length);
       },
       validate: (output) => {
         expect(output).to.be.a('string');
@@ -40,7 +40,7 @@ describe('web4.utils.util', function () {
   it('"isBigNumber" should return a boolean', function (done) {
     const test = {
       function: (data) => {
-        return web4.utils.util.isBigNumber(data.number);
+        return igc.utils.util.isBigNumber(data.number);
       },
       validate: (output) => {
         expect(output).to.be.a('boolean');
@@ -66,7 +66,7 @@ describe('web4.utils.util', function () {
   it('"toBigNumber" should return a big number based on given value', function (done) {
     const test = {
       function: (data) => {
-        return web4.utils.util.toBigNumber(data.number);
+        return igc.utils.util.toBigNumber(data.number);
       },
       validate: (output) => {
         expect(output instanceof BigNumber).to.equal(true);

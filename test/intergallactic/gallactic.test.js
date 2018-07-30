@@ -1,40 +1,40 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 
-before('instantiate web4', function () {
-  new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+before('instantiate IGC', function () {
+  new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Web4.gltc', function () {
-  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+describe('Intergallactic.gltc', function () {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "getChainId" function', function () {
-    expect(web4.gltc.getChainId).to.be.a('function');
+    expect(igc.gltc.getChainId).to.be.a('function');
   });
 
   it('should have "getInfo" function', function () {
-    expect(web4.gltc.getInfo).to.be.a('function');
+    expect(igc.gltc.getInfo).to.be.a('function');
   });
 
   it('should have "getLatestBlock" function', function () {
-    expect(web4.gltc.getLatestBlock).to.be.a('function');
+    expect(igc.gltc.getLatestBlock).to.be.a('function');
   });
 
   it('should have "getBlock" function', function () {
-    expect(web4.gltc.getBlock).to.be.a('function');
+    expect(igc.gltc.getBlock).to.be.a('function');
   });
 
   it('should have "getBlockTxns" function', function () {
-    expect(web4.gltc.getBlockTxns).to.be.a('function');
+    expect(igc.gltc.getBlockTxns).to.be.a('function');
   });
 
   it('"getChainId", should return chain info including ChainId', function (done) {
     const test = {
       function: (data) => {
-        return web4.gltc.getChainId();
+        return igc.gltc.getChainId();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -55,7 +55,7 @@ describe('Web4.gltc', function () {
   it('"getInfo", should return node information', function (done) {
     const test = {
       function: (data) => {
-        return web4.gltc.getInfo();
+        return igc.gltc.getInfo();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -81,7 +81,7 @@ describe('Web4.gltc', function () {
   it('"getLatestBlock", should return node info including latest block info', function (done) {
     const test = {
       function: (data) => {
-        return web4.gltc.getLatestBlock();
+        return igc.gltc.getLatestBlock();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -102,13 +102,13 @@ describe('Web4.gltc', function () {
   it('"getBlock", should return block info given a block height', function (done) {
     const test = {
       // before: (data) => {
-      //   return web4.gltc.getLatestBlock()
+      //   return igc.gltc.getLatestBlock()
       //     .then(res => {
       //       data.height = res.body.result.Block.header.height;
       //     });
       // },
       function: (data) => {
-        return web4.gltc.getBlock(data.height);
+        return igc.gltc.getBlock(data.height);
       },
       validate: (res, input) => {
         expect(res.statusCode).to.equal(200);
@@ -136,13 +136,13 @@ describe('Web4.gltc', function () {
   it('"getBlockTxns", should return list of block transactions', function (done) {
     const test = {
       // before: (data) => {
-      //   return web4.gltc.getInfo()
+      //   return igc.gltc.getInfo()
       //     .then(res => {
       //       data.height = res.body.result.Block.header.height;
       //     });
       // },
       function: (data) => {
-        return web4.gltc.getBlockTxns(data.height);
+        return igc.gltc.getBlockTxns(data.height);
       },
       validate: (res, input) => {
         expect(res.statusCode).to.equal(200);

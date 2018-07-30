@@ -1,36 +1,36 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 
-before('instantiate web4', function () {
-  new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+before('instantiate Intergallactic', function () {
+  new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Web4.account', function () {
-  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+describe('igc.account', function () {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "listAccounts" func', function () {
-    expect(web4.account.listAccounts).to.be.a('function');
+    expect(igc.account.listAccounts).to.be.a('function');
   });
 
   it('should have "getAccount" func', function () {
-    expect(web4.account.getAccount).to.be.a('function');
+    expect(igc.account.getAccount).to.be.a('function');
   });
 
   it('should have "getStorage" func', function () {
-    expect(web4.account.getStorage).to.be.a('function');
+    expect(igc.account.getStorage).to.be.a('function');
   });
 
   it('should have "getStorageAt" func', function () {
-    expect(web4.account.getStorageAt).to.be.a('function');
+    expect(igc.account.getStorageAt).to.be.a('function');
   });
 
   it('"listAccounts", should return account details', function (done) {
     const test = {
       function: (data) => {
-        return web4.account.listAccounts(data.address)
+        return igc.account.listAccounts(data.address)
       },
       validate: function (res) {
         expect(res.body).to.be.an('object');
@@ -49,7 +49,7 @@ describe('Web4.account', function () {
   it('"getAccount", should return account details', function (done) {
     const test = {
       function: (data) => {
-        return web4.account.getAccount(data.address);
+        return igc.account.getAccount(data.address);
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -81,7 +81,7 @@ describe('Web4.account', function () {
   it('"getStorage", should return storage details', function (done) {
     const test = {
       function: (data) => {
-        return web4.account.getStorage(data.address);
+        return igc.account.getStorage(data.address);
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -103,7 +103,7 @@ describe('Web4.account', function () {
   it('"getStorageAt", should return storage details', function (done) {
     const test = {
       function: (data) => {
-        return web4.account.getStorageAt(data.address, data.key);
+        return igc.account.getStorageAt(data.address, data.key);
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);

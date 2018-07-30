@@ -1,12 +1,12 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 
-function instantiateWeb4 () {
-  return new Web4({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+function instantiateIGC () {
+  return new Intergallactic({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
 }
 
 /**
@@ -51,57 +51,57 @@ glOrWd.runTest = function (test, done, count = 0) {
   }
 };
 
-before('instantiate web4', function () {
-  instantiateWeb4();
+before('instantiate intergallactic', function () {
+  instantiateIGC();
 });
 
 /**
- * Web4 library should act as the parent class that sets the provider
+ * Intergallactic library should act as the parent class that sets the provider
  * for other class to interact with the blockchain node. if provider
  * not provided, it should throw an error. and other child that require
  * provider to interact to blockchain node will not work
  */
-describe('Web4', function () {
-  const web4 = instantiateWeb4();
+describe('Intergallactic', function () {
+  const intergallactic = instantiateIGC();
 
   it('should have "setConnection" property', function () {
-    expect(web4.setConnection).to.be.a('function');
+    expect(intergallactic.setConnection).to.be.a('function');
   });
 
   it('should have "conn" property', function () {
-    expect(web4.conn).to.be.an('object');
+    expect(intergallactic.conn).to.be.an('object');
   });
 
   it('should have "account" property', function () {
-    expect(web4.account).to.be.an('object');
+    expect(intergallactic.account).to.be.an('object');
   });
 
   it('should have "gltc" property', function () {
-    expect(web4.gltc).to.be.an('object');
+    expect(intergallactic.gltc).to.be.an('object');
   });
 
   it('should have "Txn" property', function () {
-    expect(web4.Txn).to.be.a('function');
+    expect(intergallactic.Txn).to.be.a('function');
   });
 
   it('should have "utils" property', function () {
-    expect(web4.utils).to.be.an('object');
+    expect(intergallactic.utils).to.be.an('object');
   });
 
   it('should have "version" property', function () {
-    expect(web4.version).to.be.an('object');
+    expect(intergallactic.version).to.be.an('object');
   });
 
   // it('should have "isConnected" function', function () {
-  //   expect(web4.isConnected)
+  //   expect(intergallactic.isConnected)
   // })
 });
 
-describe('Web4.setConnection', function () {
-  const web4 = instantiateWeb4();
+describe('Intergallactic.setConnection', function () {
+  const igc = instantiateIGC();
 
-  it('should set web4.conn property and return json rpc connection object', function () {
-    expect(web4.setConnection('http://54.95.41.253:1337/rpc', 'jsonrpc')).to.be.an('object');
-    expect(web4.conn.url).to.equal('http://54.95.41.253:1337/rpc');
+  it('should set igc.conn property and return json rpc connection object', function () {
+    expect(igc.setConnection('http://54.95.41.253:1337/rpc', 'jsonrpc')).to.be.an('object');
+    expect(igc.conn.url).to.equal('http://54.95.41.253:1337/rpc');
   });
 });

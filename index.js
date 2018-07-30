@@ -1,9 +1,9 @@
 'use strict';
 
-var Web4 = require('./lib/web4');
+var Intergallactic = require('./lib/intergallactic');
 
-if (typeof windows !== 'undefined' && typeof window.Web4 === 'undefined') {
-  window.Web4 = Web4;
+if (typeof windows !== 'undefined' && typeof window.Intergallactic === 'undefined') {
+  window.Intergallactic = Intergallactic;
 }
 
-module.exports = Web4;
+module.exports = Intergallactic;

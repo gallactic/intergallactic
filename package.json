@@ -1,5 +1,5 @@
 {
-  "name": "web4",
+  "name": "Intergallactic",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -21,6 +21,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/finterra007/web4"
+    "url": "https://github.com/gallactic/intergallactic.git"
   }
 }

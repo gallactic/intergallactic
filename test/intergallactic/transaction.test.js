@@ -1,6 +1,6 @@
 'use strict';
 
-var Web4 = typeof window !== 'undefined' ? window.Web4 : require('../../index');
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 
@@ -9,13 +9,13 @@ const testAcc = {
   privKey: 'B3F4AE2C242ACEE2374C49990DD196361A88B25EDA473947A381830B3B4D418F2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF',
   pubKey: '2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF'
 }
-before('instantiate web4', function () {
-  new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+before('instantiate IGC', function () {
+  new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Web4.Txn', function () {
-  const web4 = new Web4({ url: glOrWd.tnet, protocol: 'jsonrpc' });
-  const newTxn = new web4.Txn({}, { type: 1 });
+describe('Intergallactic.Txn', function () {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+  const newTxn = new igc.Txn({}, { type: 1 });
 
   it('should have "signSync" function upon instantiate', function () {
     expect(newTxn.signSync).to.be.a('function');
@@ -44,7 +44,7 @@ describe('Web4.Txn', function () {
   it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, data.opt);
+        const newTxn = new igc.Txn(data.txn, data.opt);
         return newTxn.signSync(data.privKey);
       },
       validate: (res) => {
@@ -99,7 +99,7 @@ describe('Web4.Txn', function () {
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, data.opt);
+        const newTxn = new igc.Txn(data.txn, data.opt);
         try {
           newTxn.signSync(data.privKey);
         } catch (e) {
@@ -134,7 +134,7 @@ describe('Web4.Txn', function () {
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey);
       },
       validate: (res) => {
@@ -183,7 +183,7 @@ describe('Web4.Txn', function () {
   it('"send", should send the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -224,7 +224,7 @@ describe('Web4.Txn', function () {
   it('"signNSend", should sign the transaction and do send process', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
         return newTxn.signNSend(data.privateKey);
       },
       validate: (res) => {
@@ -259,7 +259,7 @@ describe('Web4.Txn', function () {
   it('"call", should call the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -302,7 +302,7 @@ describe('Web4.Txn', function () {
   it('"signNCall", should sign the transaction and do send process', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new web4.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
         return newTxn.signNCall(data.privKey);
       },
       validate: (res) => {
