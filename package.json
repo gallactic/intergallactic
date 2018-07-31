@@ -12,7 +12,7 @@
     "gallactic",
     "gallactic.js",
     "gallactic js",
-    "intergallactic",
+    "intergallactic"
   ],
   "devDependencies": {
     "chai": "4.1.2",
