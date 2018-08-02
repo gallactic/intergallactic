@@ -65,6 +65,23 @@ describe('igc.utils.conversion', () => {
     glOrWd.runTest(test, done);
   });
 
+  it('"fromBoson" should throw an error or return NaN, provided invalid data as input', (done) => {
+    const test = {
+      function: (input) => {
+        try {
+          let result = igc.utils.conversion.fromBoson(input.number, input.unit)
+          return result;
+        }
+        catch (e) {
+          return e;
+        }
+      },
+      validate: (output) => {}
+    };
+    test.data = testData.conversionTest.fromBoson.invalid;
+    glOrWd.runTest(test, done);
+  });
+
   it('"toBoson" should convert value to given unit value', (done) => {
     const test = {
       function: (input) => {
@@ -78,6 +95,24 @@ describe('igc.utils.conversion', () => {
     };
 
     test.data = testData.conversionTest.toBoson.valid;
+    glOrWd.runTest(test, done);
+  });
+
+  it('"toBoson" should , provided invalid data as input', (done) => {
+    const test = {
+      function: (input) => {
+        try {
+          let result = igc.utils.conversion.toBoson(input.number, input.unit);
+          return result;
+        }
+        catch (e) {
+          return e;
+        }
+      },
+      validate: (output) => {}
+    };
+
+    test.data = testData.conversionTest.toBoson.invalid;
     glOrWd.runTest(test, done);
   });
 

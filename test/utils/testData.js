@@ -5,6 +5,8 @@ var glOrWd = (typeof window !== 'undefined' ? window : global);
 var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
 glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 let errorMessage= 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
+var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
+const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
 module.exports = {
   commonTest: {
@@ -596,15 +598,148 @@ module.exports = {
           validate: (output) => {
             expect(output.toNumber()).to.equal(1);
           }
+        },
+        {
+          input: {
+            number: undefined
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+          }
+        },
+        {
+          input: {
+            number: null
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+          }
+        },
+        {
+          input: {
+            number: ''
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+          }
+        },
+        {
+          input: {
+            number: 0
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+          }
         }
       ],
       invalid: [
         {
           input: {
-
+            number: 'string'
           },
           validate: (output) => {
-
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 'string',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 1000000000000000000,
+            unit: 'string'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: '',
+            unit: ''
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: undefined,
+            unit: undefined
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 'string',
+            unit: 'string'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: 0,
+            unit: 32
+          },
+          validate: (output) => {
+            // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
+            // expect(output.message).to.equal('@Josef, please provide appropriate error message');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: '00x0f',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: '0x0F.F.F',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: '0x0F',
+            unit: 'gtxx'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
           }
         }
       ]
@@ -651,10 +786,111 @@ module.exports = {
       invalid: [
         {
           input: {
-
+            number: 'string'
           },
           validate: (output) => {
-
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 'string',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 1000000000000000000,
+            unit: 'string'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: '',
+            unit: ''
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: undefined,
+            unit: undefined
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: 'string',
+            unit: 'string'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: 0,
+            unit: 32
+          },
+          validate: (output) => {
+            // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
+            // expect(output.message).to.equal('@Josef, please provide appropriate error message');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+          }
+        },
+        {
+          input: {
+            number: '00x0f',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: '0x0F.F.F',
+            unit: 'gtx'
+          },
+          validate: (output) => {
+            expect(output.toString()).to.equal('NaN');
+            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+          }
+        },
+        {
+          input: {
+            number: '0x0F',
+            unit: 'gtxx'
+          },
+          validate: (output) => {
+            expect(output.message).to.equal(errorMessage);
+            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
           }
         }
       ]
