@@ -5,7 +5,7 @@ var expect = typeof window !== 'undefined' ? window.expect : require('chai').exp
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 let testData = require('./testData.js');
 
-describe.only('igc.utils.conversion', () => {
+describe('igc.utils.conversion', () => {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "getUnit" function', () => {
