@@ -43,9 +43,7 @@ describe('igc.utils.conversion', () => {
           return e;
         }
       },
-      validate: (output) => {
-
-      }
+      validate: (output) => {}
     };
     test.data = testData.conversionTest.getUnitValue.invalid;
     glOrWd.runTest(test, done);
@@ -93,7 +91,6 @@ describe('igc.utils.conversion', () => {
         expect(output.toNumber()).to.equal(1000000000000000000);
       }
     };
-
     test.data = testData.conversionTest.toBoson.valid;
     glOrWd.runTest(test, done);
   });
@@ -111,9 +108,7 @@ describe('igc.utils.conversion', () => {
       },
       validate: (output) => {}
     };
-
     test.data = testData.conversionTest.toBoson.invalid;
     glOrWd.runTest(test, done);
   });
-
 });

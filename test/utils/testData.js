@@ -529,7 +529,7 @@ module.exports = {
             unit: 32
           },
           validate: (output) => {
-            // expect(output).to.equal() //@Josef, Please fix the issue for this input
+            // expect(output).to.equal() //@Josef, Please fix the issue for this input and add the correct parameter
           }
         },
         {
@@ -751,36 +751,28 @@ module.exports = {
             number: 1,
             unit: 'gtx'
           },
-          validate: (output) => {
-
-          }
+          validate: (output) => {}
         },
         {
           input: {
             number: '1',
             unit: 'gtx'
           },
-          validate: (output) => {
-
-          }
+          validate: (output) => {}
         },
         {
           input: {
             number: '0x1',
             unit: 'gtx'
           },
-          validate: (output) => {
-
-          }
+          validate: (output) => {}
         },
         // input without unit value, by default should convert from "gtx"
         {
           input: {
             number: 1
           },
-          validate: (output) => {
-
-          }
+          validate: (output) => {}
         }
       ],
       invalid: [
