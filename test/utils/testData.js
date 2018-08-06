@@ -712,8 +712,6 @@ let errorMessage;
           },
           validate: (output) => {
             errorMessage = 'Unit parameter is not a valid unit';
-            // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
-            console.log('here');
             expect(output.message).to.equal(errorMessage);
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
@@ -758,29 +756,48 @@ let errorMessage;
             number: 1,
             unit: 'gtx'
           },
-          validate: (output) => { }
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(1000000000000000000);
+          }
         },
         {
           input: {
             number: '1',
             unit: 'gtx'
           },
-          validate: (output) => { }
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(1000000000000000000);
+          }
         },
         {
           input: {
             number: '0x1',
             unit: 'gtx'
           },
-          validate: (output) => { }
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(1000000000000000000);
+          }
         },
         // input without unit value, by default should convert from "gtx"
         {
           input: {
             number: 1
           },
-          validate: (output) => { }
-        }
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(1000000000000000000);
+          }
+        },
+        // should give 0 value of big number with undefined number & unit param
+        {
+          input: {
+            number: undefined,
+            unit: undefined
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
+          }
+        },
       ],
       invalid: [
         {
@@ -831,17 +848,6 @@ let errorMessage;
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
-        // invalid unit value and number as input ???
-        {
-          input: {
-            number: undefined,
-            unit: undefined
-          },
-          validate: (output) => {
-            expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
-            expect(BigNumber.isBigNumber(output)).to.equal(true);
-          }
-        },
         {
           input: {
             number: 'string',
@@ -859,8 +865,8 @@ let errorMessage;
             unit: 32
           },
           validate: (output) => {
-            // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
-            // expect(output.message).to.equal('@Josef, please provide appropriate error message');
+            errorMessage = 'Unit parameter is not a valid unit';
+            expect(output.message).to.equal(errorMessage);
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
@@ -890,6 +896,7 @@ let errorMessage;
             unit: 'gtxx'
           },
           validate: (output) => {
+            errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
             expect(output.message).to.equal(errorMessage);
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }

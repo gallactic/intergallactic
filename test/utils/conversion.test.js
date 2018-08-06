@@ -88,7 +88,6 @@ describe('Intergallactic.utils.conversion', () => {
       },
       validate: (output) => {
         expect(igc.utils.util.isBigNumber(output)).to.equal(true);
-        expect(output.toNumber()).to.equal(1000000000000000000);
       }
     };
     test.data = conversionTestData.toBoson.valid;
