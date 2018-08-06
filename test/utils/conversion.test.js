@@ -3,9 +3,9 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-let testData = require('./testData.js');
+let conversionTestData = glOrWd.testDataUtil.conversionTest;
 
-describe('igc.utils.conversion', () => {
+describe('Intergallactic.utils.conversion', () => {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "getUnit" function', () => {
@@ -21,31 +21,31 @@ describe('igc.utils.conversion', () => {
   });
 
   it('"getUnitValue" should return the "boson" value based on given unit', (done) => {
-    let test={
+    let test = {
       function: (input) => {
         let result = igc.utils.conversion.getUnitValue(input.unit);
         return result;
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.conversionTest.getUnitValue.valid;
+    test.data = conversionTestData.getUnitValue.valid;
     glOrWd.runTest(test, done);
   });
 
   it('"getUnitValue" should throw an error, provided invalid data as input', (done) => {
-    let test={
+    let test = {
       function: (input) => {
         try {
           let result = igc.utils.conversion.getUnitValue(input.unit);
           return result;
         }
-        catch (e){
+        catch (e) {
           return e;
         }
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.conversionTest.getUnitValue.invalid;
+    test.data = conversionTestData.getUnitValue.invalid;
     glOrWd.runTest(test, done);
   });
 
@@ -59,7 +59,7 @@ describe('igc.utils.conversion', () => {
         expect(igc.utils.util.isBigNumber(output)).to.equal(true);
       }
     };
-    test.data = testData.conversionTest.fromBoson.valid;
+    test.data = conversionTestData.fromBoson.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -74,9 +74,9 @@ describe('igc.utils.conversion', () => {
           return e;
         }
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.conversionTest.fromBoson.invalid;
+    test.data = conversionTestData.fromBoson.invalid;
     glOrWd.runTest(test, done);
   });
 
@@ -91,7 +91,7 @@ describe('igc.utils.conversion', () => {
         expect(output.toNumber()).to.equal(1000000000000000000);
       }
     };
-    test.data = testData.conversionTest.toBoson.valid;
+    test.data = conversionTestData.toBoson.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -106,9 +106,9 @@ describe('igc.utils.conversion', () => {
           return e;
         }
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.conversionTest.toBoson.invalid;
+    test.data = conversionTestData.toBoson.invalid;
     glOrWd.runTest(test, done);
   });
 });

@@ -3,9 +3,9 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-var testData = require('./testData.js')
+let commonTestData = glOrWd.testDataUtil.commonTest;
 
-describe('igc.utils.util', function () {
+describe('Intergallactic.utils.util', function () {
   const igc = new Intergallactic({
     url: glOrWd.tnet,
     protocol: 'jsonrpc'
@@ -20,7 +20,7 @@ describe('igc.utils.util', function () {
 
   it('should have "toBigNumber" function', function () {
     expect(igc.utils.util.toBigNumber).to.be.a('function');
-  })
+  });
 
   it('"generateUuid" should return a string', function (done) {
     const test = {
@@ -40,51 +40,51 @@ describe('igc.utils.util', function () {
 
 
   it('"isBigNumber" should return a boolean true, provided Big Number as a parameter', function (done) {
-    let test = {
+    const test = {
       function: (input) => {
-        let result = igc.utils.util.isBigNumber(input.number);
+        const result = igc.utils.util.isBigNumber(input.number);
         return result;
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.commonTest.isBigNumber.valid;
+    test.data = commonTestData.isBigNumber.valid;
     glOrWd.runTest(test, done);
   });
 
   /*** Null and empty string (in the following test script) will return null and empty string, respectively ***/
   it('"isBigNumber" should return a boolean false, provided a parameter that is not a Big Number', function (done) {
-    let test = {
+    const test = {
       function: (input) => {
-        let result = igc.utils.util.isBigNumber(input.number);
+        const result = igc.utils.util.isBigNumber(input.number);
         return result;
       },
-      validate: (output) => {}
+      validate: (output) => { }
     };
-    test.data = testData.commonTest.isBigNumber.invalid;
+    test.data = commonTestData.isBigNumber.invalid;
     glOrWd.runTest(test, done);
   });
 
   it('"toBigNumber" should return a big number based on given value', function (done) {
-    let test={
+    const test = {
       function: (input) => {
-        let result = igc.utils.util.toBigNumber(input.number);
+        const result = igc.utils.util.toBigNumber(input.number);
         return result;
       },
-      validate: (output)=>{}
+      validate: (output) => { }
     };
-    test.data=testData.commonTest.toBigNumber.valid;
+    test.data = commonTestData.toBigNumber.valid;
     glOrWd.runTest(test, done);
   });
 
   it('"toBigNumber" should not return a big number based on invalid inputs', function (done) {
-    let test={
+    let test = {
       function: (input) => {
         let result = igc.utils.util.toBigNumber(input.number);
         return result;
       },
-      validate: (output)=>{}
+      validate: (output) => { }
     };
-    test.data=testData.commonTest.toBigNumber.invalid;
+    test.data = commonTestData.toBigNumber.invalid;
     glOrWd.runTest(test, done);
   });
 });

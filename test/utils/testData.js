@@ -3,18 +3,16 @@
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
-glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
-let errorMessage= 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
-var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
-const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
-module.exports = {
+let errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
+
+glOrWd.testDataUtil = {
   commonTest: {
     isBigNumber: {
       valid: [
         {
           input: {
-            number: new(require('bignumber.js'))()
+            number: new BigNumber()
           },
           validate: (output) => {
             expect(output).to.equal(true);
@@ -86,7 +84,7 @@ module.exports = {
           input: {
             number: 1
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(1)
           }
         },
@@ -94,7 +92,7 @@ module.exports = {
           input: {
             number: '1'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(1)
           }
         },
@@ -102,7 +100,7 @@ module.exports = {
           input: {
             number: '0x1'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(1)
           }
         },
@@ -110,7 +108,7 @@ module.exports = {
           input: {
             number: '0x01'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(1)
           }
         },
@@ -118,7 +116,7 @@ module.exports = {
           input: {
             number: 15
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(15)
           }
         },
@@ -126,7 +124,7 @@ module.exports = {
           input: {
             number: '15'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(15)
           }
         },
@@ -134,7 +132,7 @@ module.exports = {
           input: {
             number: '0xf'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(15)
           }
         },
@@ -142,7 +140,7 @@ module.exports = {
           input: {
             number: new BigNumber('f', 16)
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(15)
           }
         },
@@ -150,7 +148,7 @@ module.exports = {
           input: {
             number: -1
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-1)
           }
         },
@@ -158,7 +156,7 @@ module.exports = {
           input: {
             number: '-1'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-1)
           }
         },
@@ -166,7 +164,7 @@ module.exports = {
           input: {
             number: '-0x1'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-1)
           }
         },
@@ -174,7 +172,7 @@ module.exports = {
           input: {
             number: '-0x01'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-1)
           }
         },
@@ -182,7 +180,7 @@ module.exports = {
           input: {
             number: -15
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-15)
           }
         },
@@ -190,7 +188,7 @@ module.exports = {
           input: {
             number: '-15'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-15)
           }
         },
@@ -198,7 +196,7 @@ module.exports = {
           input: {
             number: '-0xf'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-15)
           }
         },
@@ -206,7 +204,7 @@ module.exports = {
           input: {
             number: '-0x0f'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-15)
           }
         },
@@ -214,7 +212,7 @@ module.exports = {
           input: {
             number: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(115792089237316195423570985008687907853269984665640564039457584007913129639933)
           }
         },
@@ -222,7 +220,7 @@ module.exports = {
           input: {
             number: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(115792089237316195423570985008687907853269984665640564039457584007913129639935)
           }
         },
@@ -230,7 +228,7 @@ module.exports = {
           input: {
             number: '0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(115792089237316195423570985008687907853269984665640564039457584007913129639933)
           }
         },
@@ -238,7 +236,7 @@ module.exports = {
           input: {
             number: 0
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -246,7 +244,7 @@ module.exports = {
           input: {
             number: '0'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -254,7 +252,7 @@ module.exports = {
           input: {
             number: '0x0'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -262,7 +260,7 @@ module.exports = {
           input: {
             number: -0
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-0)
           }
         },
@@ -270,7 +268,7 @@ module.exports = {
           input: {
             number: '-0'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-0)
           }
         },
@@ -278,7 +276,7 @@ module.exports = {
           input: {
             number: '-0x0'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(-0)
           }
         },
@@ -286,7 +284,7 @@ module.exports = {
           input: {
             number: new BigNumber(0)
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -294,7 +292,7 @@ module.exports = {
           input: {
             number: null
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -302,7 +300,7 @@ module.exports = {
           input: {
             number: undefined
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -310,7 +308,7 @@ module.exports = {
           input: {
             number: ''
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(0)
           }
         },
@@ -318,7 +316,7 @@ module.exports = {
           input: {
             number: Math.pow(10, 308)
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(1.0000000000000006e+308)
           }
         }
@@ -328,7 +326,7 @@ module.exports = {
           input: {
             number: 'string'
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toString()).to.equal('NaN')
           }
         },
@@ -336,7 +334,7 @@ module.exports = {
           input: {
             number: Math.pow(10, 309)
           },
-          validate: (output)=>{
+          validate: (output) => {
             expect(output.toNumber()).to.equal(Infinity)
           }
         }
@@ -639,7 +637,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -649,7 +647,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -658,7 +656,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toNumber()).to.equal(0);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -668,7 +666,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -678,7 +676,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -688,7 +686,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -698,7 +696,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -709,7 +707,7 @@ module.exports = {
           validate: (output) => {
             // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
             // expect(output.message).to.equal('@Josef, please provide appropriate error message');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -719,7 +717,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -729,7 +727,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -739,7 +737,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         }
       ]
@@ -751,28 +749,28 @@ module.exports = {
             number: 1,
             unit: 'gtx'
           },
-          validate: (output) => {}
+          validate: (output) => { }
         },
         {
           input: {
             number: '1',
             unit: 'gtx'
           },
-          validate: (output) => {}
+          validate: (output) => { }
         },
         {
           input: {
             number: '0x1',
             unit: 'gtx'
           },
-          validate: (output) => {}
+          validate: (output) => { }
         },
         // input without unit value, by default should convert from "gtx"
         {
           input: {
             number: 1
           },
-          validate: (output) => {}
+          validate: (output) => { }
         }
       ],
       invalid: [
@@ -782,7 +780,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -792,7 +790,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -801,7 +799,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toNumber()).to.equal(0);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -811,7 +809,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -821,7 +819,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -831,7 +829,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -841,7 +839,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -852,7 +850,7 @@ module.exports = {
           validate: (output) => {
             // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
             // expect(output.message).to.equal('@Josef, please provide appropriate error message');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
         {
@@ -862,7 +860,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -872,7 +870,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.toString()).to.equal('NaN');
-            expect(igc.utils.util.isBigNumber(output)).to.equal(true);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
           }
         },
         {
@@ -882,7 +880,7 @@ module.exports = {
           },
           validate: (output) => {
             expect(output.message).to.equal(errorMessage);
-            expect(igc.utils.util.isBigNumber(output)).to.equal(false);
+            expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         }
       ]
