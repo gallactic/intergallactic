@@ -4,7 +4,6 @@ var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : req
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
-glOrWd.testDataUtil = glOrWd.testDataUtil || require('./utils/testData');
 
 function instantiateIGC () {
   return new Intergallactic({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });

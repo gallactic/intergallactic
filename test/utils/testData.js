@@ -4,9 +4,9 @@ var expect = typeof window !== 'undefined' ? window.expect : require('chai').exp
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
 
-let errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
+let errorMessage;
 
-glOrWd.testDataUtil = {
+(typeof window !== 'undefined' ? window : module.exports).utilTestData = {
   commonTest: {
     isBigNumber: {
       valid: [
@@ -522,12 +522,14 @@ glOrWd.testDataUtil = {
         }
       ],
       invalid: [
+        // where the unit is not defined
         {
           input: {
             unit: 32
           },
           validate: (output) => {
-            // expect(output).to.equal() //@Josef, Please fix the issue for this input and add the correct parameter
+            errorMessage = 'Unit parameter is not a valid unit';
+            expect(output.message).to.equal(errorMessage);
           }
         },
         {
@@ -535,7 +537,8 @@ glOrWd.testDataUtil = {
             unit: ''
           },
           validate: (output) => {
-            expect(output.message).to.equal(errorMessage)
+            errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
+            expect(output.message).to.equal(errorMessage);
           }
         },
         {
@@ -551,7 +554,8 @@ glOrWd.testDataUtil = {
             unit: 'string'
           },
           validate: (output) => {
-            expect(output.message).to.equal(errorMessage)
+            errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
+            expect(output.message).to.equal(errorMessage);
           }
         }
       ]
@@ -628,6 +632,17 @@ glOrWd.testDataUtil = {
           validate: (output) => {
             expect(output.toNumber()).to.equal(0);
           }
+        },
+        // should give 0 value of big number with undefined number & unit param
+        {
+          input: {
+            number: undefined,
+            unit: undefined
+          },
+          validate: (output) => {
+            expect(output.toNumber()).to.equal(0);
+            expect(BigNumber.isBigNumber(output)).to.equal(true);
+          }
         }
       ],
       invalid: [
@@ -681,16 +696,6 @@ glOrWd.testDataUtil = {
         },
         {
           input: {
-            number: undefined,
-            unit: undefined
-          },
-          validate: (output) => {
-            expect(output.toNumber()).to.equal(0); //@Josef, please suggest if this is ok for an invalid test case
-            expect(BigNumber.isBigNumber(output)).to.equal(true);
-          }
-        },
-        {
-          input: {
             number: 'string',
             unit: 'string'
           },
@@ -699,14 +704,17 @@ glOrWd.testDataUtil = {
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
+        // invalid unit value, must throw an error
         {
           input: {
             number: 0,
             unit: 32
           },
           validate: (output) => {
+            errorMessage = 'Unit parameter is not a valid unit';
             // expect(output.toNumber()).to.equal('@Josef, please provide appropriate error message');
-            // expect(output.message).to.equal('@Josef, please provide appropriate error message');
+            console.log('here');
+            expect(output.message).to.equal(errorMessage);
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
@@ -736,6 +744,7 @@ glOrWd.testDataUtil = {
             unit: 'gtxx'
           },
           validate: (output) => {
+            errorMessage = 'This unit currently not supported yet, please use one of the following boson,kboson,femtogtx,mboson,picogtx,gboson,nanogtx,nano,microgtx,micro,milligtx,milli,gtx,kgtx,kilogtx,grand,mgtx,megagtx,ggtx,gigagtx,tgtx,teragtx';
             expect(output.message).to.equal(errorMessage);
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
@@ -822,6 +831,7 @@ glOrWd.testDataUtil = {
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
+        // invalid unit value and number as input ???
         {
           input: {
             number: undefined,
@@ -842,6 +852,7 @@ glOrWd.testDataUtil = {
             expect(BigNumber.isBigNumber(output)).to.equal(false);
           }
         },
+        // invalid unit value, must throw an error
         {
           input: {
             number: 0,

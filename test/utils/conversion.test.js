@@ -3,7 +3,7 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-let conversionTestData = glOrWd.testDataUtil.conversionTest;
+let conversionTestData = (typeof window !== 'undefined' ? window : require('./testData')).utilTestData.conversionTest;
 
 describe('Intergallactic.utils.conversion', () => {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
