@@ -27,6 +27,10 @@ glOrWd.runTest = function (test, done, count = 0) {
     return done();
   }
 
+  if (typeof process !== 'undefined') {
+    process.stdout.write(`Testing case number: ${count}\r`);
+  }
+
   let beforeTest = test.before ? test.before(test.data[count].input) : null;
   let res = beforeTest && typeof beforeTest.then === 'function' ?
     beforeTest.then(() => test.function(test.data[count].input)) :
@@ -35,17 +39,17 @@ glOrWd.runTest = function (test, done, count = 0) {
   if (res && typeof res.then === 'function') {
     res
       .then(output => {
-        test.validate(output, test.data[count].input);
+        test.validate(output, test.data[count].input, count);
         if (test.data[count].validate) {
-          test.data[count].validate(output, test.data[count].input);
+          test.data[count].validate(output, test.data[count].input, count);
         }
         glOrWd.runTest(test, done, ++count);
       })
       .catch(done);
   } else {
-    test.validate(res, test.data[count].input);
+    test.validate(res, test.data[count].input, count);
     if (test.data[count].validate) {
-      test.data[count].validate(res, test.data[count].input);
+      test.data[count].validate(res, test.data[count].input, count);
     }
     glOrWd.runTest(test, done, ++count);
   }
