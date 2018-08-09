@@ -3,7 +3,7 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-let conversionTestData = (typeof window !== 'undefined' ? window : require('./testData')).utilTestData.conversionTest;
+let conversionTd = (typeof window !== 'undefined' ? window : require('./conversion.td'))._conversionTd;;
 
 describe('Intergallactic.utils.conversion', () => {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
@@ -28,7 +28,7 @@ describe('Intergallactic.utils.conversion', () => {
       },
       validate: (output) => { }
     };
-    test.data = conversionTestData.getUnitValue.valid;
+    test.data = conversionTd.getUnitValue.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -45,7 +45,7 @@ describe('Intergallactic.utils.conversion', () => {
       },
       validate: (output) => { }
     };
-    test.data = conversionTestData.getUnitValue.invalid;
+    test.data = conversionTd.getUnitValue.invalid;
     glOrWd.runTest(test, done);
   });
 
@@ -59,7 +59,7 @@ describe('Intergallactic.utils.conversion', () => {
         expect(igc.utils.util.isBigNumber(output)).to.equal(true);
       }
     };
-    test.data = conversionTestData.fromBoson.valid;
+    test.data = conversionTd.fromBoson.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -76,7 +76,7 @@ describe('Intergallactic.utils.conversion', () => {
       },
       validate: (output) => { }
     };
-    test.data = conversionTestData.fromBoson.invalid;
+    test.data = conversionTd.fromBoson.invalid;
     glOrWd.runTest(test, done);
   });
 
@@ -90,7 +90,7 @@ describe('Intergallactic.utils.conversion', () => {
         expect(igc.utils.util.isBigNumber(output)).to.equal(true);
       }
     };
-    test.data = conversionTestData.toBoson.valid;
+    test.data = conversionTd.toBoson.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -107,7 +107,7 @@ describe('Intergallactic.utils.conversion', () => {
       },
       validate: (output) => { }
     };
-    test.data = conversionTestData.toBoson.invalid;
+    test.data = conversionTd.toBoson.invalid;
     glOrWd.runTest(test, done);
   });
 });

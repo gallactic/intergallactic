@@ -3,7 +3,7 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-let commonTestData = (typeof window !== 'undefined' ? window : require('./testData')).utilTestData.commonTest;
+let commonTd = (typeof window !== 'undefined' ? window : require('./common.td'))._commonTd;;
 
 describe('Intergallactic.utils.util', function () {
   const igc = new Intergallactic({
@@ -47,7 +47,7 @@ describe('Intergallactic.utils.util', function () {
       },
       validate: (output) => { }
     };
-    test.data = commonTestData.isBigNumber.valid;
+    test.data = commonTd.isBigNumber.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -60,7 +60,7 @@ describe('Intergallactic.utils.util', function () {
       },
       validate: (output) => { }
     };
-    test.data = commonTestData.isBigNumber.invalid;
+    test.data = commonTd.isBigNumber.invalid;
     glOrWd.runTest(test, done);
   });
 
@@ -72,7 +72,7 @@ describe('Intergallactic.utils.util', function () {
       },
       validate: (output) => { }
     };
-    test.data = commonTestData.toBigNumber.valid;
+    test.data = commonTd.toBigNumber.valid;
     glOrWd.runTest(test, done);
   });
 
@@ -84,7 +84,7 @@ describe('Intergallactic.utils.util', function () {
       },
       validate: (output) => { }
     };
-    test.data = commonTestData.toBigNumber.invalid;
+    test.data = commonTd.toBigNumber.invalid;
     glOrWd.runTest(test, done);
   });
 });
