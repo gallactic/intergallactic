@@ -1,0 +1,3 @@
+--recursive
+--file test/intergallactic.test.js
+--timeout 5000

@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <!-- Mocha related dependencies -->
+  <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+  <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+  <!-- Big Number library -->
+  <script src="https://cdn.bootcss.com/bignumber.js/7.2.1/bignumber.js"></script>
+
+  <script>mocha.setup('bdd')</script>
+  <!-- Intergallactic library -->
+  <script src="../dist/intergallactic.min.js"></script>
+  <!-- load all test data -->
+  <script src="utils/common.td.js"></script>
+  <script src="utils/conversion.td.js"></script>
+
+  <!-- test files -->
+  <script src="intergallactic.test.js"></script>
+  <script src="intergallactic/account.test.js"></script>
+  <script src="intergallactic/gallactic.test.js"></script>
+  <script src="intergallactic/transaction.test.js"></script>
+  <script src="utils/common.test.js"></script>
+  <script src="utils/conversion.test.js"></script>
+  <script src="utils/gkUtil.test.js"></script>
+
+  <script>
+    mocha.checkLeaks();
+    mocha.globals(['jQuery']);
+    mocha.run();
+  </script>
+</body>
+</html>
