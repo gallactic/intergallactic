@@ -3,7 +3,7 @@
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
 var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-let commonTd = (typeof window !== 'undefined' ? window : require('./common.td'))._commonTd;;
+let commonTd = (typeof window !== 'undefined' ? window : require('./common.td'))._commonTd;
 
 describe('Intergallactic.utils.util', function () {
   const igc = new Intergallactic({

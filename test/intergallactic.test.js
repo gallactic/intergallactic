@@ -6,7 +6,7 @@ var glOrWd = (typeof window !== 'undefined' ? window : global);
 glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 
 function instantiateIGC () {
-  return new Intergallactic({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+  return new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 }
 
 /**

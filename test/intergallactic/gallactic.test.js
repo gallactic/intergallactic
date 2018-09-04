@@ -122,7 +122,7 @@ describe('Intergallactic.gltc', function () {
 
     test.data = [{
       input: {
-        height: 200
+        height: 5
       }
     }, {
       input: {
@@ -156,7 +156,7 @@ describe('Intergallactic.gltc', function () {
 
     test.data = [{
       input: {
-        height: 200
+        height: 5
       }
     }]
 
