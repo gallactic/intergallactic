@@ -89,6 +89,10 @@ describe('Intergallactic', function () {
     expect(intergallactic.gallactic).to.be.an('object');
   });
 
+  it('should have "Contract" property', function () {
+    expect(intergallactic.Contract).to.be.a('function');
+  });
+
   it('should have "Transaction" property', function () {
     expect(intergallactic.Transaction).to.be.a('function');
   });
