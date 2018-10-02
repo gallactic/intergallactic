@@ -13,9 +13,9 @@ before('instantiate IGC', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Intergallactic.Txn', function () {
+describe('Intergallactic.Transaction', function () {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
-  const newTxn = new igc.Txn({}, { type: 1 });
+  const newTxn = new igc.Transaction({}, { type: 1 });
 
   it('should have "signSync" function upon instantiate', function () {
     expect(newTxn.signSync).to.be.a('function');
@@ -52,7 +52,7 @@ describe('Intergallactic.Txn', function () {
   it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, data.opt);
+        const newTxn = new igc.Transaction(data.txn, data.opt);
         return newTxn.signSync(data.privKey);
       },
       validate: (res) => {
@@ -108,7 +108,7 @@ describe('Intergallactic.Txn', function () {
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, data.opt);
+        const newTxn = new igc.Transaction(data.txn, data.opt);
         try {
           newTxn.signSync(data.privKey);
         } catch (e) {
@@ -143,7 +143,7 @@ describe('Intergallactic.Txn', function () {
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey);
       },
       validate: (res) => {
@@ -192,7 +192,7 @@ describe('Intergallactic.Txn', function () {
   it('"send", should send the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -236,7 +236,7 @@ describe('Intergallactic.Txn', function () {
   it('"call", should call the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -281,7 +281,7 @@ describe('Intergallactic.Txn', function () {
   it.skip('"bond", should bond the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -330,7 +330,7 @@ describe('Intergallactic.Txn', function () {
   it.skip('"unbond", should unbond the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -381,7 +381,7 @@ describe('Intergallactic.Txn', function () {
   it.skip('"permission", should do permission transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -431,7 +431,7 @@ describe('Intergallactic.Txn', function () {
   it('"broadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             newTxn.signatories = [{ signature, publicKey: data.pubKey }];
@@ -474,7 +474,7 @@ describe('Intergallactic.Txn', function () {
   it('"signNBroadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.signNBroadcast(data.privKey);
       },
       validate: (res) => {
