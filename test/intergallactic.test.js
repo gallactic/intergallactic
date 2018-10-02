@@ -80,12 +80,12 @@ describe('Intergallactic', function () {
     expect(intergallactic.account).to.be.an('object');
   });
 
-  it('should have "gltc" property', function () {
-    expect(intergallactic.gltc).to.be.an('object');
+  it('should have "gallactic" property', function () {
+    expect(intergallactic.gallactic).to.be.an('object');
   });
 
-  it('should have "Txn" property', function () {
-    expect(intergallactic.Txn).to.be.a('function');
+  it('should have "Transaction" property', function () {
+    expect(intergallactic.Transaction).to.be.a('function');
   });
 
   it('should have "utils" property', function () {

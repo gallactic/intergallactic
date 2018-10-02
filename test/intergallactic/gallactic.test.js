@@ -8,33 +8,33 @@ before('instantiate IGC', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Intergallactic.gltc', function () {
+describe('Intergallactic.gallactic', function () {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 
   it('should have "getChainId" function', function () {
-    expect(igc.gltc.getChainId).to.be.a('function');
+    expect(igc.gallactic.getChainId).to.be.a('function');
   });
 
   it('should have "getInfo" function', function () {
-    expect(igc.gltc.getInfo).to.be.a('function');
+    expect(igc.gallactic.getInfo).to.be.a('function');
   });
 
   it('should have "getLatestBlock" function', function () {
-    expect(igc.gltc.getLatestBlock).to.be.a('function');
+    expect(igc.gallactic.getLatestBlock).to.be.a('function');
   });
 
   it('should have "getBlock" function', function () {
-    expect(igc.gltc.getBlock).to.be.a('function');
+    expect(igc.gallactic.getBlock).to.be.a('function');
   });
 
   it('should have "getBlockTxns" function', function () {
-    expect(igc.gltc.getBlockTxns).to.be.a('function');
+    expect(igc.gallactic.getBlockTxns).to.be.a('function');
   });
 
   it('"getChainId", should return chain info including ChainId', function (done) {
     const test = {
       function: (data) => {
-        return igc.gltc.getChainId();
+        return igc.gallactic.getChainId();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -55,7 +55,7 @@ describe('Intergallactic.gltc', function () {
   it('"getInfo", should return node information', function (done) {
     const test = {
       function: (data) => {
-        return igc.gltc.getInfo();
+        return igc.gallactic.getInfo();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -81,7 +81,7 @@ describe('Intergallactic.gltc', function () {
   it('"getLatestBlock", should return node info including latest block info', function (done) {
     const test = {
       function: (data) => {
-        return igc.gltc.getLatestBlock();
+        return igc.gallactic.getLatestBlock();
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
@@ -102,13 +102,13 @@ describe('Intergallactic.gltc', function () {
   it('"getBlock", should return block info given a block height', function (done) {
     const test = {
       // before: (data) => {
-      //   return igc.gltc.getLatestBlock()
+      //   return igc.gallactic.getLatestBlock()
       //     .then(res => {
       //       data.height = res.body.result.Block.header.height;
       //     });
       // },
       function: (data) => {
-        return igc.gltc.getBlock(data.height);
+        return igc.gallactic.getBlock(data.height);
       },
       validate: (res, input) => {
         expect(res.statusCode).to.equal(200);
@@ -136,13 +136,13 @@ describe('Intergallactic.gltc', function () {
   it('"getBlockTxns", should return list of block transactions', function (done) {
     const test = {
       // before: (data) => {
-      //   return igc.gltc.getInfo()
+      //   return igc.gallactic.getInfo()
       //     .then(res => {
       //       data.height = res.body.result.Block.header.height;
       //     });
       // },
       function: (data) => {
-        return igc.gltc.getBlockTxns(data.height);
+        return igc.gallactic.getBlockTxns(data.height);
       },
       validate: (res, input) => {
         expect(res.statusCode).to.equal(200);
