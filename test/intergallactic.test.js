@@ -1,13 +1,12 @@
 'use strict';
 
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var chai = typeof window !== 'undefined' ? window : require('chai');
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 
-function instantiateIGC () {
-  return new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
-}
+glOrWd.expect = chai.expect;
+glOrWd.tnet = 'http://127.0.0.1:1337/rpc';
+glOrWd.Intergallactic = Intergallactic;
 
 /**
  * To do test in a waterfall sequence manner for asynchronous tests that using promise
@@ -54,6 +53,10 @@ glOrWd.runTest = function (test, done, count = 0) {
     glOrWd.runTest(test, done, ++count);
   }
 };
+
+function instantiateIGC () {
+  return new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+}
 
 before('instantiate intergallactic', function () {
   instantiateIGC();
@@ -105,7 +108,7 @@ describe('Intergallactic.setConnection', function () {
   const igc = instantiateIGC();
 
   it('should set igc.conn property and return json rpc connection object', function () {
-    expect(igc.setConnection('http://54.95.41.253:1337/rpc', 'jsonrpc')).to.be.an('object');
-    expect(igc.conn.url).to.equal('http://54.95.41.253:1337/rpc');
+    expect(igc.setConnection(glOrWd.tnet, 'jsonrpc')).to.be.an('object');
+    expect(igc.conn.url).to.equal(glOrWd.tnet);
   });
 });

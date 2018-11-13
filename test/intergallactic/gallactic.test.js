@@ -1,10 +1,10 @@
 'use strict';
 
-var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
+var Intergallactic = glOrWd.Intergallactic;
+var expect = glOrWd.expect;
 
-before('instantiate IGC', function () {
+before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 

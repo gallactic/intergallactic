@@ -1,8 +1,8 @@
 'use strict';
 
-var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
+var Intergallactic = glOrWd.Intergallactic;
+var expect = glOrWd.expect;
 
 const testAcc = {
   address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY',
