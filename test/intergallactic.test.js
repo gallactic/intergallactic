@@ -1,5 +1,6 @@
 'use strict';
 
+var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../index');
 var chai = typeof window !== 'undefined' ? window : require('chai');
 var glOrWd = (typeof window !== 'undefined' ? window : global);
@@ -7,6 +8,7 @@ var glOrWd = (typeof window !== 'undefined' ? window : global);
 glOrWd.expect = chai.expect;
 glOrWd.tnet = 'http://127.0.0.1:1337/rpc';
 glOrWd.Intergallactic = Intergallactic;
+glOrWd.BigNumber = BigNumber;
 
 /**
  * To do test in a waterfall sequence manner for asynchronous tests that using promise

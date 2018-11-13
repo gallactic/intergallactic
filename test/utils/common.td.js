@@ -1,7 +1,8 @@
 'use strict';
 
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
-var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
+var glOrWd = (typeof window !== 'undefined' ? window : global);
+var expect = glOrWd.expect;
+var BigNumber = glOrWd.BigNumber;
 
 var errorMessage;
 var _commonTd = {};
