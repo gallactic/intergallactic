@@ -12,7 +12,7 @@ To use intergallactic in Node.js, just ```require``` it:
 
 ```js
 var intergallactic = require('intergallactic');
-intergallactic.gltc.getInfo()
+intergallactic.gallactic.getInfo()
   .then(res => {
     /**
     res: {

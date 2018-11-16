@@ -1,8 +1,8 @@
 'use strict';
 
-var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
+var Intergallactic = glOrWd.Intergallactic;
+var expect = glOrWd.expect;
 
 before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
@@ -106,9 +106,10 @@ describe('igc.account', function () {
         return igc.account.getStorageAt(data.address, data.key);
       },
       validate: (res) => {
+        expect(res.body.error, 'response error').to.equal(undefined);
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body.result).to.be.an('object', 'result');
+        expect(res.body.result).to.be.an('object', 'response result');
       }
     };
     test.data = [{

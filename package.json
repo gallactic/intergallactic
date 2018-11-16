@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "bignumber.js": "7.2.1",
-    "gallactickeys": "0.1.7",
+    "gallactickeys": "^0.2.1",
     "node-fetch": "2.1.2"
   },
   "repository": {
