@@ -61,12 +61,12 @@ describe('Intergallactic.gallactic', function () {
         expect(res.statusCode).to.equal(200);
         expect(res).to.be.an('object');
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.result).to.be.an('object');
-        expect(res.body.result.result.node_info).to.be.an('object');
-        expect(res.body.result.result.latest_block_hash).to.be.a('string');
-        expect(res.body.result.result.latest_app_hash).to.be.a('string');
-        expect(res.body.result.result.latest_block_height).to.be.a('number');
-        expect(res.body.result.result.latest_block_time).to.be.a('string');
+        expect(res.body.result.NodeInfo).to.be.an('object');
+        expect(res.body.result.PubKey).to.be.a('string');
+        expect(res.body.result.GenesisHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHeight).to.be.a('number');
+        expect(res.body.result.LatestBlockTime).to.be.a('number');
         expect(res.body.result.NodeVersion).to.be.a('string');
       }
     }
