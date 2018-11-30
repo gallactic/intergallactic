@@ -9,7 +9,7 @@ const testAcc = {
   privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
   pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
 }
-before('instantiate IGC', function () {
+before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
@@ -64,7 +64,7 @@ describe('Intergallactic.Transaction', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 1,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
@@ -84,7 +84,7 @@ describe('Intergallactic.Transaction', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 2,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
