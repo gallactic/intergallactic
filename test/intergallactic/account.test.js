@@ -27,10 +27,10 @@ describe('igc.account', function () {
     expect(igc.account.getStorageAt).to.be.a('function');
   });
 
-  it('"listAccounts", should return account details', function (done) {
+  it('"listAccounts", should return list of account details', function (done) {
     const test = {
       function: (data) => {
-        return igc.account.listAccounts(data.address)
+        return igc.account.listAccounts()
       },
       validate: function (res) {
         expect(res.body).to.be.an('object');
@@ -61,24 +61,70 @@ describe('igc.account', function () {
 
     test.data = [{
       input: {
-        address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY'
+        address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu'
       },
       validate: (res) => {
-        expect(res.body.result.Account.address).to.equal('acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY');
+        expect(res.body.result.Account.address).to.equal('acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu');
       }
     }, {
       input: {
-        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua'
+        address: 'acT1MVKCaTVKhBwpMr667vA9VRtubFtiwZf'
       },
       validate: (res) => {
-        expect(res.body.result.Account.address).to.equal('acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua');
+        expect(res.body.result.Account.address).to.equal('acT1MVKCaTVKhBwpMr667vA9VRtubFtiwZf');
       }
     }],
 
     glOrWd.runTest(test, done);
   });
 
-  it('"getStorage", should return storage details', function (done) {
+  it('"listValidators", should return list of validator account details', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.account.listValidators()
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.BondedValidators).to.be.an('array');
+        expect(res.body.result.UnbondingValidators).to.not.equal(undefined);
+      }
+    };
+
+    test.data = [{
+      input: {}
+    }];
+
+    glOrWd.runTest(test, done);
+  })
+
+  it('"getValidator", should return validator account details', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.account.getValidator(data.address);
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.Validator).to.be.an('object');
+      }
+    };
+
+    test.data = [{
+      input: {
+        address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM'
+      },
+      validate: (res) => {
+        expect(res.body.result.Validator.publicKey).to.be.a('string');
+      }
+    }];
+
+    glOrWd.runTest(test, done);
+  })
+
+  it.skip('"getStorage", should return storage details', function (done) {
     const test = {
       function: (data) => {
         return igc.account.getStorage(data.address);
@@ -93,14 +139,14 @@ describe('igc.account', function () {
     };
     test.data = [{
       input: {
-        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua'
+        address: 'acHcDPZqkYYDsVFAypgX77xuZDNqQDbynpP'
       }
     }]
 
     glOrWd.runTest(test, done);
   });
 
-  it('"getStorageAt", should return storage details', function (done) {
+  it.skip('"getStorageAt", should return storage details', function (done) {
     const test = {
       function: (data) => {
         return igc.account.getStorageAt(data.address, data.key);
@@ -114,7 +160,7 @@ describe('igc.account', function () {
     };
     test.data = [{
       input: {
-        address: 'acLmQjWRZ4XmNZ7QfydbymbKKDYRSunkTua',
+        address: 'acG9u2dcdu1kZoSEyxuGU7aWv3sHA8KNebo',
         key: 'greeting'
       }
     }]
