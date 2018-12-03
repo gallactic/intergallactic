@@ -5,11 +5,11 @@ var Intergallactic = glOrWd.Intergallactic;
 var expect = glOrWd.expect;
 
 const testAcc = {
-  address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY',
-  privKey: 'B3F4AE2C242ACEE2374C49990DD196361A88B25EDA473947A381830B3B4D418F2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF',
-  pubKey: '2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF'
+  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
+  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
+  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
 }
-before('instantiate IGC', function () {
+before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
@@ -64,7 +64,7 @@ describe('Intergallactic.Transaction', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 1,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
@@ -84,7 +84,7 @@ describe('Intergallactic.Transaction', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 2,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
@@ -230,10 +230,10 @@ describe('Intergallactic.Transaction', function () {
     }]
 
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 0);
   });
 
-  it('"call", should call the given transaction', function (done) {
+  it.skip('"call", should call the given transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -275,10 +275,10 @@ describe('Intergallactic.Transaction', function () {
       }
     }];
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it.skip('"bond", should bond the given transaction', function (done) {
+  it('"bond", should bond the given transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -311,11 +311,11 @@ describe('Intergallactic.Transaction', function () {
             unit: 'boson'
           },
           to: {
-            address: 'vaUjHHvCLmUzbzrz7xgF266xZEDvRa6RSDC',
+            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
             amount: 100,
             unit: 'boson'
           },
-          publicKey: 'd67a7f69cfecfbacfa45046942191b310dc4ff1f9e8bf71de565949fc72af373'
+          publicKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX'
         }
       },
       validate: () => {
@@ -324,10 +324,10 @@ describe('Intergallactic.Transaction', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it.skip('"unbond", should unbond the given transaction', function (done) {
+  it('"unbond", should unbond the given transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -352,13 +352,13 @@ describe('Intergallactic.Transaction', function () {
       input: {
         // privKey: testAcc.privKey,
         // pubKey: testAcc.pubKey,
-        privKey: '0A0766C934FAFE80E73A088B25406291AA6959B34446D82D2DD698C88100EDD9BD9E00FA32C8D1826EA4436F3817F800D201E0756A14735C4D2F72F30D11B1BE',
-        pubKey: 'BD9E00FA32C8D1826EA4436F3817F800D201E0756A14735C4D2F72F30D11B1BE',
+        privKey: 'skWKMJw3ohL81ACUNFMEzVcfa9GrWyVyQC33FUeRNLSa1MMHshZVgLuxQQPCB8AyCfxZQh98HuLfvqG5zqtVawdnP237bpn',
+        pubKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX',
         txnType: 4,
         txn: {
           from: {
             // address: testAcc.address
-            address: 'vaSe5zgueCAdo4VRKf9wtMnp73GmMpFQpRM',
+            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
             amount: 200,
             unit: 'boson'
           },
@@ -375,10 +375,10 @@ describe('Intergallactic.Transaction', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it.skip('"permission", should do permission transaction', function (done) {
+  it('"permission", should do permission transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -411,7 +411,7 @@ describe('Intergallactic.Transaction', function () {
             unit: 'boson'
           },
           to: {
-            address: 'acUGqVmMzbD6SNkbTevqjGhfnXwckAZL9Lm',
+            address: 'acG9u2dcdu1kZoSEyxuGU7aWv3sHA8KNebo',
             amount: 0,
             unit: 'boson'
           },
@@ -425,10 +425,10 @@ describe('Intergallactic.Transaction', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 3000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it('"broadcast", should broadcast the transaction', function (done) {
+  it.skip('"broadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -471,7 +471,7 @@ describe('Intergallactic.Transaction', function () {
     setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
   });
 
-  it('"signNBroadcast", should broadcast the transaction', function (done) {
+  it.skip('"signNBroadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });

@@ -61,12 +61,12 @@ describe('Intergallactic.gallactic', function () {
         expect(res.statusCode).to.equal(200);
         expect(res).to.be.an('object');
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.result).to.be.an('object');
-        expect(res.body.result.result.node_info).to.be.an('object');
-        expect(res.body.result.result.latest_block_hash).to.be.a('string');
-        expect(res.body.result.result.latest_app_hash).to.be.a('string');
-        expect(res.body.result.result.latest_block_height).to.be.a('number');
-        expect(res.body.result.result.latest_block_time).to.be.a('string');
+        expect(res.body.result.NodeInfo).to.be.an('object');
+        expect(res.body.result.PubKey).to.be.a('string');
+        expect(res.body.result.GenesisHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHeight).to.be.a('number');
+        expect(res.body.result.LatestBlockTime).to.be.a('number');
         expect(res.body.result.NodeVersion).to.be.a('string');
       }
     }
@@ -148,6 +148,8 @@ describe('Intergallactic.gallactic', function () {
         expect(res.statusCode).to.equal(200);
         expect(res).to.be.an('object');
         expect(res.body.result).to.be.an('object');
+        expect(res.body.result.Count).to.be.an('number');
+        expect(res.body.result.Txs).to.be.an('array');
         // expect(res.body.result.ResultBlock).to.be.an('object');
         // expect(res.body.result.ResultBlock.block_meta.header.height)
         //   .to.equal(input.height);
@@ -159,6 +161,117 @@ describe('Intergallactic.gallactic', function () {
         height: 5
       }
     }]
+
+    glOrWd.runTest(test, done);
+  });
+
+  it('"getConsensusState", should return the Consensus state infor', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.gallactic.getConsensusState();
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.result.RoundState).to.be.an('object');
+        expect(res.body.result.RoundState['height/round/step']).to.be.a('string');
+        expect(res.body.result.RoundState.height_vote_set).to.be.a('array');
+        expect(res.body.result.PeerRoundStates).to.be.an('array');
+      }
+    };
+
+    test.data = [{
+      input: {}
+    }];
+
+    glOrWd.runTest(test, done);
+  })
+
+  it('"getGenesis", should return genesis json information', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.gallactic.getGenesis();
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.Genesis).to.be.an('object');
+        expect(res.body.result.Genesis.chainName).to.be.a('string');
+        expect(res.body.result.Genesis.genesisTime).to.be.a('string');
+        expect(res.body.result.Genesis.maximumPower).to.be.a('number');
+        expect(res.body.result.Genesis.sortitionFee).to.be.a('number');
+        expect(res.body.result.Genesis.global).to.be.an('object');
+        expect(res.body.result.Genesis.accounts).to.be.an('array');
+        expect(res.body.result.Genesis.contracts).to.be.an('array');
+        expect(res.body.result.Genesis.validators).to.be.an('array');
+      }
+    }
+
+    test.data = [{
+      input: {}
+    }];
+
+    glOrWd.runTest(test, done);
+  });
+
+  it('"getPeers", should return node\'s peers information', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.gallactic.getPeers();
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+      }
+    }
+
+    test.data = [{
+      input: {}
+    }];
+
+    glOrWd.runTest(test, done);
+  });
+
+  it('"getStatus", should return blockchain status and other info', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.gallactic.getStatus();
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res).to.be.an('object');
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.NodeInfo).to.be.an('object');
+        expect(res.body.result.PubKey).to.be.a('string');
+        expect(res.body.result.GenesisHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHash).to.be.a('string');
+        expect(res.body.result.LatestBlockHeight).to.be.a('number');
+        expect(res.body.result.LatestBlockTime).to.be.a('number');
+        expect(res.body.result.NodeVersion).to.be.a('string');
+      }
+    }
+
+    test.data = [{
+      input: {}
+    }]
+
+    glOrWd.runTest(test, done);
+  });
+
+  it('"getUnconfirmedTxs", should return list of unconfirmed transaction info', function (done) {
+    const test = {
+      function: (data) => {
+        return igc.gallactic.getUnconfirmedTxs();
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.Count).to.be.a('number');
+        expect(res.body.result.Txs).to.not.equal(undefined);
+      }
+    };
+
+    test.data = [{
+      input: {}
+    }];
 
     glOrWd.runTest(test, done);
   });
