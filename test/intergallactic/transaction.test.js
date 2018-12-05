@@ -70,8 +70,7 @@ describe('Intergallactic.Transaction', function () {
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
@@ -192,7 +191,7 @@ describe('Intergallactic.Transaction', function () {
   it('"send", should send the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, data.option);
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -213,17 +212,18 @@ describe('Intergallactic.Transaction', function () {
       input: {
         privKey: testAcc.privKey,
         pubKey: testAcc.pubKey,
-        txnType: 1,
+        option: {
+          type: 1,
+          unit: 'boson'
+        },
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }]
         }
       }
@@ -307,13 +307,11 @@ describe('Intergallactic.Transaction', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 200,
-            unit: 'boson'
+            amount: 200
           },
           to: {
             address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
-            amount: 100,
-            unit: 'boson'
+            amount: 100
           },
           publicKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX'
         }
@@ -359,13 +357,11 @@ describe('Intergallactic.Transaction', function () {
           from: {
             // address: testAcc.address
             address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
-            amount: 200,
-            unit: 'boson'
+            amount: 200
           },
           to: {
             address: testAcc.address,
-            amount: 100,
-            unit: 'boson'
+            amount: 100
           }
         }
       },
@@ -407,13 +403,11 @@ describe('Intergallactic.Transaction', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 100,
-            unit: 'boson'
+            amount: 100
           },
           to: {
             address: 'acG9u2dcdu1kZoSEyxuGU7aWv3sHA8KNebo',
-            amount: 0,
-            unit: 'boson'
+            amount: 0
           },
           permissions: '0x4',
           set: true
@@ -428,7 +422,7 @@ describe('Intergallactic.Transaction', function () {
     setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it.skip('"broadcast", should broadcast the transaction', function (done) {
+  it('"broadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
@@ -455,13 +449,11 @@ describe('Intergallactic.Transaction', function () {
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }]
         }
       }
@@ -494,13 +486,11 @@ describe('Intergallactic.Transaction', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           },
           to: {
             address: '',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           },
           gasLimit: 1,
           data: '010203' // currently require an input of byte array
