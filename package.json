@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "webpack && mocha"
+    "browser": "webpack",
+    "test": "mocha"
   },
   "author": "Josef Wijaya <josefwijaya@outlook.com>",
   "license": "MIT",
@@ -22,7 +23,7 @@
   },
   "dependencies": {
     "bignumber.js": "7.2.1",
-    "gallactickeys": "0.1.7",
+    "gallactickeys": "^0.2.2",
     "node-fetch": "2.1.2"
   },
   "repository": {

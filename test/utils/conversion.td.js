@@ -1,15 +1,18 @@
 'use strict';
 
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
+var expect = glOrWd.expect;
+var BigNumber = glOrWd.BigNumber;
 
 var errorMessage;
 var _conversionTd = {};
 
+// sbo, stands for "should be ok"
+// snbo, stands for "should not be ok"
 _conversionTd = {
   getUnitValue: {
     valid: [
+      // boson is valid unit value, sbo
       {
         input: {
           unit: 'boson'
@@ -18,6 +21,7 @@ _conversionTd = {
           expect(output).to.equal(1)
         }
       },
+      // gtx is valid unit value, sbo
       {
         input: {
           unit: 'gtx'
@@ -26,6 +30,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000000000)
         }
       },
+      // gtx is valid unit value, sbo
       {
         input: {
           unit: 'teragtx'
@@ -34,6 +39,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000000000000000000000)
         }
       },
+      // kboson is valid unit value, sbo
       {
         input: {
           unit: 'kboson'
@@ -42,6 +48,7 @@ _conversionTd = {
           expect(output).to.equal(1000)
         }
       },
+      // kboson is valid unit value, sbo
       {
         input: {
           unit: 'femtogtx'
@@ -50,6 +57,7 @@ _conversionTd = {
           expect(output).to.equal(1000)
         }
       },
+      // mboson is valid unit value, sbo
       {
         input: {
           unit: 'mboson'
@@ -58,6 +66,7 @@ _conversionTd = {
           expect(output).to.equal(1000000)
         }
       },
+      // picogtx is valid unit value, sbo
       {
         input: {
           unit: 'picogtx'
@@ -66,6 +75,7 @@ _conversionTd = {
           expect(output).to.equal(1000000)
         }
       },
+      // gboson is valid unit value, sbo
       {
         input: {
           unit: 'gboson'
@@ -74,6 +84,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000)
         }
       },
+      // nanogtx is valid unit value, sbo
       {
         input: {
           unit: 'nanogtx'
@@ -82,6 +93,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000)
         }
       },
+      // nano is valid unit value, sbo
       {
         input: {
           unit: 'nano'
@@ -90,6 +102,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000)
         }
       },
+      // microgtx is valid unit value, sbo
       {
         input: {
           unit: 'microgtx'
@@ -98,6 +111,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000)
         }
       },
+      // micro is valid unit value, sbo
       {
         input: {
           unit: 'micro'
@@ -106,6 +120,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000)
         }
       },
+      // milligtx is valid unit value, sbo
       {
         input: {
           unit: 'milligtx'
@@ -114,6 +129,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000000)
         }
       },
+      // milli is valid unit value, sbo
       {
         input: {
           unit: 'milli'
@@ -122,6 +138,7 @@ _conversionTd = {
           expect(output).to.equal(1000000000000000)
         }
       },
+      // kgtx is valid unit value, sbo
       {
         input: {
           unit: 'kgtx'
@@ -130,6 +147,7 @@ _conversionTd = {
           expect(output).to.equal(1e+21)
         }
       },
+      // kilogtx is valid unit value, sbo
       {
         input: {
           unit: 'kilogtx'
@@ -138,6 +156,7 @@ _conversionTd = {
           expect(output).to.equal(1e+21)
         }
       },
+      // grand is valid unit value, sbo
       {
         input: {
           unit: 'grand'
@@ -146,6 +165,7 @@ _conversionTd = {
           expect(output).to.equal(1e+21)
         }
       },
+      // mgtx is valid unit value, sbo
       {
         input: {
           unit: 'mgtx'
@@ -154,6 +174,7 @@ _conversionTd = {
           expect(output).to.equal(1e+24)
         }
       },
+      // megagtx is valid unit value, sbo
       {
         input: {
           unit: 'megagtx'
@@ -162,6 +183,7 @@ _conversionTd = {
           expect(output).to.equal(1e+24)
         }
       },
+      // ggtx is valid unit value, sbo
       {
         input: {
           unit: 'ggtx'
@@ -170,6 +192,7 @@ _conversionTd = {
           expect(output).to.equal(1e+27)
         }
       },
+      // gigagtx is valid unit value, sbo
       {
         input: {
           unit: 'gigagtx'
@@ -178,6 +201,7 @@ _conversionTd = {
           expect(output).to.equal(1e+27)
         }
       },
+      // tgtx is valid unit value, sbo
       {
         input: {
           unit: 'tgtx'
@@ -188,7 +212,7 @@ _conversionTd = {
       }
     ],
     invalid: [
-      // where the unit is not defined
+      // 32 is invalid unit value, snbo
       {
         input: {
           unit: 32
@@ -198,6 +222,7 @@ _conversionTd = {
           expect(output.message).to.equal(errorMessage);
         }
       },
+      // invalid unit value, snbo
       {
         input: {
           unit: ''
@@ -207,6 +232,7 @@ _conversionTd = {
           expect(output.message).to.equal(errorMessage);
         }
       },
+      // invalid unit value, snbo
       {
         input: {
           unit: undefined
@@ -215,6 +241,7 @@ _conversionTd = {
           expect(output.message).to.equal(undefined)
         }
       },
+      // invalid unit value, snbo
       {
         input: {
           unit: 'string'
@@ -312,6 +339,7 @@ _conversionTd = {
       }
     ],
     invalid: [
+      // invalid conversion value, snbo
       {
         input: {
           number: 'string'
@@ -321,6 +349,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: 'string',
@@ -331,6 +360,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           unit: 'gtx'
@@ -340,6 +370,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion unit value, snbo
       {
         input: {
           number: 1000000000000000000,
@@ -350,6 +381,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value and unit value, snbo
       {
         input: {
           number: '',
@@ -360,6 +392,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value and unit value, snbo
       {
         input: {
           number: 'string',
@@ -382,6 +415,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: '00x0f',
@@ -392,6 +426,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: '0x0F.F.F',
@@ -402,6 +437,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion unit value, snbo
       {
         input: {
           number: '0x0F',
@@ -463,9 +499,10 @@ _conversionTd = {
           expect(output.toNumber()).to.equal(0);
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
-      },
+      }
     ],
     invalid: [
+      // invalid conversion value, snbo
       {
         input: {
           number: 'string'
@@ -475,6 +512,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: 'string',
@@ -494,6 +532,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion unit value, snbo
       {
         input: {
           number: 1000000000000000000,
@@ -504,6 +543,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value and unit value, snbo
       {
         input: {
           number: '',
@@ -514,6 +554,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value and unit value, snbo
       {
         input: {
           number: 'string',
@@ -536,6 +577,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(false);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: '00x0f',
@@ -546,6 +588,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion value, snbo
       {
         input: {
           number: '0x0F.F.F',
@@ -556,6 +599,7 @@ _conversionTd = {
           expect(BigNumber.isBigNumber(output)).to.equal(true);
         }
       },
+      // invalid conversion unit value, snbo
       {
         input: {
           number: '0x0F',

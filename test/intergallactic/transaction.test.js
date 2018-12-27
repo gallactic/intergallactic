@@ -1,21 +1,21 @@
 'use strict';
 
-var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
 var glOrWd = (typeof window !== 'undefined' ? window : global);
+var Intergallactic = glOrWd.Intergallactic;
+var expect = glOrWd.expect;
 
 const testAcc = {
-  address: 'acFbhUU8JK8mPhwYqMwy1DRrKP8fwUwnQMY',
-  privKey: 'B3F4AE2C242ACEE2374C49990DD196361A88B25EDA473947A381830B3B4D418F2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF',
-  pubKey: '2D47D0F43B27C57815E3317624742468D929544DF142ABA49AFFD9E00C8B1FCF'
+  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
+  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
+  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
 }
-before('instantiate IGC', function () {
+before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Intergallactic.Txn', function () {
+describe('Intergallactic.Transaction', function () {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
-  const newTxn = new igc.Txn({}, { type: 1 });
+  const newTxn = new igc.Transaction({}, { type: 1 });
 
   it('should have "signSync" function upon instantiate', function () {
     expect(newTxn.signSync).to.be.a('function');
@@ -52,7 +52,7 @@ describe('Intergallactic.Txn', function () {
   it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, data.opt);
+        const newTxn = new igc.Transaction(data.txn, data.opt);
         return newTxn.signSync(data.privKey);
       },
       validate: (res) => {
@@ -64,14 +64,13 @@ describe('Intergallactic.Txn', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 1,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
@@ -84,7 +83,7 @@ describe('Intergallactic.Txn', function () {
         privKey: testAcc.privKey,
         opt: {
           type: 2,
-          chainId: 'Gallactica-Chain88291',
+          chainId: 'test-chain-5bc7',
           sequence: 300
         },
         txn: {
@@ -108,7 +107,7 @@ describe('Intergallactic.Txn', function () {
   it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, data.opt);
+        const newTxn = new igc.Transaction(data.txn, data.opt);
         try {
           newTxn.signSync(data.privKey);
         } catch (e) {
@@ -143,7 +142,7 @@ describe('Intergallactic.Txn', function () {
   it('"sign",should sign the transaction and return the signed transaction object', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey);
       },
       validate: (res) => {
@@ -192,7 +191,7 @@ describe('Intergallactic.Txn', function () {
   it('"send", should send the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, data.option);
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -213,30 +212,31 @@ describe('Intergallactic.Txn', function () {
       input: {
         privKey: testAcc.privKey,
         pubKey: testAcc.pubKey,
-        txnType: 1,
+        option: {
+          type: 1,
+          unit: 'boson'
+        },
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }]
         }
       }
     }]
 
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 0);
   });
 
-  it('"call", should call the given transaction', function (done) {
+  it.skip('"call", should call the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -275,13 +275,13 @@ describe('Intergallactic.Txn', function () {
       }
     }];
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it.skip('"bond", should bond the given transaction', function (done) {
+  it('"bond", should bond the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -307,15 +307,13 @@ describe('Intergallactic.Txn', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 200,
-            unit: 'boson'
+            amount: 200
           },
           to: {
-            address: 'vaUjHHvCLmUzbzrz7xgF266xZEDvRa6RSDC',
-            amount: 100,
-            unit: 'boson'
+            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
+            amount: 100
           },
-          publicKey: 'd67a7f69cfecfbacfa45046942191b310dc4ff1f9e8bf71de565949fc72af373'
+          publicKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX'
         }
       },
       validate: () => {
@@ -324,13 +322,13 @@ describe('Intergallactic.Txn', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it.skip('"unbond", should unbond the given transaction', function (done) {
+  it('"unbond", should unbond the given transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -352,20 +350,18 @@ describe('Intergallactic.Txn', function () {
       input: {
         // privKey: testAcc.privKey,
         // pubKey: testAcc.pubKey,
-        privKey: '0A0766C934FAFE80E73A088B25406291AA6959B34446D82D2DD698C88100EDD9BD9E00FA32C8D1826EA4436F3817F800D201E0756A14735C4D2F72F30D11B1BE',
-        pubKey: 'BD9E00FA32C8D1826EA4436F3817F800D201E0756A14735C4D2F72F30D11B1BE',
+        privKey: 'skWKMJw3ohL81ACUNFMEzVcfa9GrWyVyQC33FUeRNLSa1MMHshZVgLuxQQPCB8AyCfxZQh98HuLfvqG5zqtVawdnP237bpn',
+        pubKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX',
         txnType: 4,
         txn: {
           from: {
             // address: testAcc.address
-            address: 'vaSe5zgueCAdo4VRKf9wtMnp73GmMpFQpRM',
-            amount: 200,
-            unit: 'boson'
+            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
+            amount: 200
           },
           to: {
             address: testAcc.address,
-            amount: 100,
-            unit: 'boson'
+            amount: 100
           }
         }
       },
@@ -375,13 +371,13 @@ describe('Intergallactic.Txn', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 5000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
-  it.skip('"permission", should do permission transaction', function (done) {
+  it('"permission", should do permission transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             const signatories = [{
@@ -407,13 +403,11 @@ describe('Intergallactic.Txn', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 100,
-            unit: 'boson'
+            amount: 100
           },
           to: {
-            address: 'acUGqVmMzbD6SNkbTevqjGhfnXwckAZL9Lm',
-            amount: 0,
-            unit: 'boson'
+            address: 'acG9u2dcdu1kZoSEyxuGU7aWv3sHA8KNebo',
+            amount: 0
           },
           permissions: '0x4',
           set: true
@@ -425,13 +419,13 @@ describe('Intergallactic.Txn', function () {
     }];
 
     this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 3000);
+    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
   });
 
   it('"broadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.sign(data.privKey)
           .then(signature => {
             newTxn.signatories = [{ signature, publicKey: data.pubKey }];
@@ -455,13 +449,11 @@ describe('Intergallactic.Txn', function () {
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }]
         }
       }
@@ -471,10 +463,10 @@ describe('Intergallactic.Txn', function () {
     setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
   });
 
-  it('"signNBroadcast", should broadcast the transaction', function (done) {
+  it.skip('"signNBroadcast", should broadcast the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
         return newTxn.signNBroadcast(data.privKey);
       },
       validate: (res) => {
@@ -494,13 +486,11 @@ describe('Intergallactic.Txn', function () {
         txn: {
           from: {
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           },
           to: {
             address: '',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           },
           gasLimit: 1,
           data: '010203' // currently require an input of byte array
@@ -512,82 +502,72 @@ describe('Intergallactic.Txn', function () {
     setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
   });
 
-
-
-
-  it.skip('DEPRECATED: "signNCall", should sign the transaction and do send process', function (done) {
+  it('doing multiple "signSync" should return signature without error', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
-        return newTxn.signNCall(data.privKey);
+        const newTxn = new igc.Transaction(data.txn, data.opt);
+        newTxn.signSync(data.privKey);
+        return newTxn.signSync(data.privKey);
       },
       validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res).to.be.a('string');
       }
     };
     test.data = [{
       input: {
         privKey: testAcc.privKey,
-        txnType: 2,
+        opt: {
+          type: 1,
+          chainId: 'test-chain-5bc7',
+          sequence: 300
+        },
         txn: {
-          from: {
+          from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
-          },
-          to: {
-            address: '',
-            amount: 10,
-            unit: 'boson'
-          },
-          gasLimit: 1,
-          data: '010203' // currently require an input of byte array
+            amount: 10
+          }],
+          to: [{
+            address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
+            amount: 10
+          }]
         }
       }
     }]
 
-    this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    glOrWd.runTest(test, done);
   });
 
-  it.skip('DEPRECATED: "signNSend", should sign the transaction and do send process', function (done) {
+  it('doing multiple "sign" should return signature without error', function (done){
     const test = {
       function: (data) => {
-        const newTxn = new igc.Txn(data.txn, { type: data.txnType });
-        return newTxn.signNSend(data.privKey);
+        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
+        return newTxn.sign(data.privKey)
+          .then(signature => {
+            return newTxn.sign(data.privKey)
+          });
       },
       validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res).to.be.a('string');
       }
     };
     test.data = [{
+      // send transaction data
       input: {
         privKey: testAcc.privKey,
         txnType: 1,
         txn: {
           from: [{
             address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }],
           to: [{
             address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10,
-            unit: 'boson'
+            amount: 10
           }]
         }
       }
     }]
 
-    this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
-  });
+    glOrWd.runTest(test, done);
+  })
 });
