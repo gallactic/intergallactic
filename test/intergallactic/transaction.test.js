@@ -13,7 +13,8 @@ before('instantiate Intergallactic', function () {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-describe('Intergallactic.Transaction', function () {
+// skipping testing transaction v1 as it's not being used anymore
+describe.skip('Intergallactic.Transaction', function () {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
   const newTxn = new igc.Transaction({}, { type: 1 });
 

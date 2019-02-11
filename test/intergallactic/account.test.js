@@ -68,10 +68,10 @@ describe('igc.account', function () {
       }
     }, {
       input: {
-        address: 'acT1MVKCaTVKhBwpMr667vA9VRtubFtiwZf'
+        address: 'acShi9Qn6r9ExCis4uFd8nbjdkgo2wopPAg'
       },
       validate: (res) => {
-        expect(res.body.result.Account.address).to.equal('acT1MVKCaTVKhBwpMr667vA9VRtubFtiwZf');
+        expect(res.body.result.Account.address).to.equal('acShi9Qn6r9ExCis4uFd8nbjdkgo2wopPAg');
       }
     }],
 
@@ -114,7 +114,7 @@ describe('igc.account', function () {
 
     test.data = [{
       input: {
-        address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM'
+        address: 'vaMiq5TLL7Bkhyz8JJKm64bNPuBRV8zSVki'
       },
       validate: (res) => {
         expect(res.body.result.Validator.publicKey).to.be.a('string');
