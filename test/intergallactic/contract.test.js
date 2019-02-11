@@ -5,7 +5,7 @@ var expect = typeof window !== 'undefined' ? window.expect : require('chai').exp
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 let contractTd = (typeof window !== 'undefined' ? window : require('./contract.td'))._contractTd;
 
-describe.only('igc.Contract', function () {
+describe('igc.Contract', function () {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
   const Contract = igc.Contract;
 
@@ -24,18 +24,18 @@ describe.only('igc.Contract', function () {
     glOrWd.runTest(test, done);
   });
 
-  it.skip('should be able to "deploy" new contract', function (done) {
+  it('should be able to "deploy" new contract', function (done) {
+    this.timeout(10000)
     const test = {
       function: (input) => {
         const myContract = new Contract(input.contract);
-        return myContract.deploy(input.privKey, input.deploy);
+        return myContract.deploy(input.privKey);
       },
       validate: (res) => {
-        // expect(res instanceof Error).to.equal(false);
-        // expect(res.statusCode).to.equal(200);
-        // expect(res.body.error).to.equal(undefined);
-        // expect(res.body.result).to.be.an('object');
-        // expect(res.body.result.TxHash).to.be.a('string');
+        expect(res instanceof Error).to.equal(false);
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object'); 
       }
     };
     test.data = contractTd.deploy.valid;
@@ -43,7 +43,7 @@ describe.only('igc.Contract', function () {
     glOrWd.runTest(test, done);
   });
 
-  it('should be able to execute contract "encodeABI" after instantiate contract with address', function (done) {
+  it('should be able to execute contract "encodeABI" after instantiate contract', function (done) {
     const test = {
       function: (input) => {
         const myContract = new Contract(input.contract);
@@ -60,35 +60,36 @@ describe.only('igc.Contract', function () {
     glOrWd.runTest(test, done);
   });
 
-  it('should be able to execute contract "call" after instantiate contract with address', function (done) {
+  it('should be able to execute contract "call" after instantiate contract and success deployment', function (done) {
+    this.timeout(30000)
     const test = {
       function: (input) => {
         const myContract = new Contract(input.contract);
-        return myContract[input.methodName].apply(this, input.methodValue).call();
+        return myContract.deploy(input.privKey, input.deploy).then(res => {          
+          return new Promise((resolve, reject) => {
+            setTimeout(function () {
+              myContract[input.methodName]
+                .apply(this, input.methodValue)
+                .call(input.privKey, { gasLimit: input.methodGasLimit })
+                .then(resolve)
+                .catch(reject)
+            }, 2000)
+          })
+        });
       },
       validate: (res) => {
         expect(res instanceof Error).to.equal(false);
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object');
+        // let data = res.body.result;
+        // expect(data.status).to.equal(0);
+        // expect(data.output).to.equal('000000000000000000000000000000000000000000000000000000000000000a')
+        // expect(data.DecodedOutput).to.equal('10')
       }
     }
 
     test.data = contractTd.methods.valid;
-    glOrWd.runTest(test, done);
-  });
-
-  it.skip('should be able to call contract "ABI Methods" after deployment', function (done) {
-    throw new Error('Implementation')
-    // const test = {
-    //   function: (input) => {
-    //     const myContract = new Contract(input);
-
-    //     return myContract;
-    //   },
-    //   validate: (res) => {
-    //     expect(res instanceof Error).to.equal(false);
-    //   }
-    // }
-
-    // test.data = contractTd.instantiate.valid;
-    // glOrWd.runTest(test, done);
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000)
   });
 });
