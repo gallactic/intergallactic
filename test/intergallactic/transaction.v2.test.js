@@ -78,11 +78,13 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
     test.data = txnTd.broadcast.ok;
+    this.timeout(10000);
     glOrWd.runTest(test, done);
   });
 
@@ -96,8 +98,9 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
 
@@ -116,8 +119,9 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
 
@@ -136,8 +140,9 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
 
@@ -156,8 +161,9 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
 
@@ -176,8 +182,9 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
 

@@ -201,7 +201,7 @@ describe('Intergallactic.gallactic', function () {
         expect(res.body.result.Genesis.sortitionFee).to.be.a('number');
         expect(res.body.result.Genesis.global).to.be.an('object');
         expect(res.body.result.Genesis.accounts).to.be.an('array');
-        expect(res.body.result.Genesis.contracts).to.be.an('array');
+        // expect(res.body.result.Genesis.contracts).to.be.an('array');
         expect(res.body.result.Genesis.validators).to.be.an('array');
       }
     }

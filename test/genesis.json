@@ -1,0 +1,7 @@
+/**
+ * THIS IS THE GENESIS FILE REQUIRED FOR TESTING PURPOSE.
+ * USE THIS GENESIS FILE TO RUN GALLACTIC. AS THIS GENESIS FILE CONTAINS
+ * ADDRESS THAT IS BEING USED FOR TESTING PURPOSE. DO NOT USE OTHER GENESIS FILE
+ * TO RUN GALLACTIC.
+ */
+{"chainName":"test-chain-5290","genesisTime":"2019-01-30T08:17:59.015912657Z","maximumPower":0,"sortitionFee":0,"global":{"balance":0,"permissions":"0x1ff"},"accounts":[{"address":"acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu","balance":10000000000000000000},{"address":"acPp2mu6vbXGtp5x77zXu6SfQ2o29SLvzZj","balance":10000000000000000000},{"address":"acQx3v3K4mFu4ESCn3WSXdLNHoTHbzzCPta","balance":10000000000000000000},{"address":"acShi9Qn6r9ExCis4uFd8nbjdkgo2wopPAg","balance":10000000000000000000}],"contracts":null,"validators":[{"address":"vaMiq5TLL7Bkhyz8JJKm64bNPuBRV8zSVki","stake":0,"publicKey":"pkzweoSYB1TVMqn3d72XkZpni7DBdpgRwGfzXy6N3DNaim2TcLc"}]}
