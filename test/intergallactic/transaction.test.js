@@ -3,434 +3,74 @@
 var glOrWd = (typeof window !== 'undefined' ? window : global);
 var Intergallactic = glOrWd.Intergallactic;
 var expect = glOrWd.expect;
+let txnTd = (typeof window !== 'undefined' ? window : require('./transaction.td'))._txnTd;
 
-const testAcc = {
-  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
-  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
-  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
-}
-before('instantiate Intergallactic', function () {
+before('instantiate Intergallactic', () => {
   new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
 });
 
-// skipping testing transaction v1 as it's not being used anymore
-describe.skip('Intergallactic.Transaction', function () {
+describe('Intergallactic.Transaction Positive Scenario', () => {
   const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
-  const newTxn = new igc.Transaction({}, { type: 1 });
+  const newTxn = new igc.Transaction({ to: 'aaa', amount: 100 });
 
-  it('should have "signSync" function upon instantiate', function () {
-    expect(newTxn.signSync).to.be.a('function');
-  });
-
-  it('should have "sign" function upon instantiate', function () {
+  it('should have "sign" function upon instantiate', () => {
     expect(newTxn.sign).to.be.a('function');
   });
 
-  it('should have "signNBroadcast" function upon instantiate', function () {
-    expect(newTxn.signNBroadcast).to.be.a('function');
-  })
-
-  it('should have "send" function upon instantiate', function () {
+  it('should have "send" function upon instantiate', () => {
     expect(newTxn.send).to.be.a('function');
   });
 
-  it('should have "call" function upon instantiate', function () {
+  it('should have "call" function upon instantiate', () => {
     expect(newTxn.call).to.be.a('function');
   });
 
-  it('should have "bond" function upon instantiate', function () {
+  it('should have "bond" function upon instantiate', () => {
     expect(newTxn.bond).to.be.a('function');
   });
 
-  it('should have "unbond" function upon instantiate', function () {
+  it('should have "unbond" function upon instantiate', () => {
     expect(newTxn.unbond).to.be.a('function');
   });
 
-  it('should have "permission" function upon instantiate', function () {
+  it('should have "permission" function upon instantiate', () => {
     expect(newTxn.permission).to.be.a('function');
   });
 
-  it('"signSync", should sign the transaction and return the signed transaction object synchronously', function (done) {
+  it('"sign", should be able to sign the transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, data.opt);
-        return newTxn.signSync(data.privKey);
+        const txn = new igc.Transaction(data.txn);
+        return txn.sign(data.pvK);
       },
       validate: (res) => {
-        expect(res).to.be.a('string');
+
       }
     };
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        opt: {
-          type: 1,
-          chainId: 'test-chain-5bc7',
-          sequence: 300
-        },
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
-            amount: 10
-          }]
-        }
-      }
-    }, {
-      input: {
-        privKey: testAcc.privKey,
-        opt: {
-          type: 2,
-          chainId: 'test-chain-5bc7',
-          sequence: 300
-        },
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 10
-          },
-          to: {
-            address: '',
-            amount: 10
-          },
-          gasLimit: 1,
-          data: '010203'
-        }
-      }
-    }]
-
+    test.data = txnTd.sign.ok;
     glOrWd.runTest(test, done);
   });
 
-  it('"signSync", should throw an error upon signing synchronously without chainId and sequence input', function (done) {
+  it('"signSync", should be able to sign the transaction synchoronously', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, data.opt);
-        try {
-          newTxn.signSync(data.privKey);
-        } catch (e) {
-          return Promise.resolve(e);
-        }
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.signSync(data.pvK);
       },
       validate: (res) => {
-        expect(res.message).to.equal('Chain id or sequence is not defined. Synchronous sign require chainId and sequence as parameter upon instantiate');
+
       }
     };
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        opt: {
-          type: 1
-        },
-        txn: {}
-      }
-    }, {
-      input: {
-        privKey: testAcc.privKey,
-        opt: {
-          type: 2
-        },
-        txn: {}
-      }
-    }]
-
+    test.data = txnTd.signSync.ok;
     glOrWd.runTest(test, done);
   });
 
-  it('"sign",should sign the transaction and return the signed transaction object', function (done) {
+  it('"broadcast", should be able to broadcast transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey);
-      },
-      validate: (res) => {
-        expect(res).to.be.a('string');
-      }
-    };
-    test.data = [{
-      // send transaction data
-      input: {
-        privKey: testAcc.privKey,
-        txnType: 1,
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10
-          }]
-        }
-      }
-    }, {
-      // call transaction data
-      input: {
-        privKey: testAcc.privKey,
-        txnType: 2,
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 10
-          },
-          to: {
-            address: '',
-            amount: 10
-          },
-          gasLimit: 1,
-          data: '010203'
-        }
-      }
-    }]
-
-    glOrWd.runTest(test, done);
-  });
-
-  it('"send", should send the transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, data.option);
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            const signatories = [{
-              signature, publicKey: data.pubKey
-            }]
-            return newTxn.send(signatories);
-          });
-      },
-      validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
-      }
-    };
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        option: {
-          type: 1,
-          unit: 'boson'
-        },
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10
-          }]
-        }
-      }
-    }]
-
-    this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 0);
-  });
-
-  it.skip('"call", should call the given transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            const signatories = [{
-              signature, publicKey: data.pubKey
-            }]
-            return newTxn.call(signatories);
-          });
-      },
-      validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
-      }
-    };
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        txnType: 2,
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 10,
-            unit: 'boson'
-          },
-          to: {
-            address: '',
-            amount: 10,
-            unit: 'boson'
-          },
-          gasLimit: 1,
-          data: '010203' // currently require an input of byte array
-        }
-      }
-    }];
-    this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
-  });
-
-  it('"bond", should bond the given transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            const signatories = [{
-              signature, publicKey: data.pubKey
-            }];
-            return newTxn.bond(signatories);
-          });
-      },
-      validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
-      }
-    };
-
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        txnType: 3,
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 200
-          },
-          to: {
-            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
-            amount: 100
-          },
-          publicKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX'
-        }
-      },
-      validate: () => {
-
-      }
-    }];
-
-    this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
-  });
-
-  it('"unbond", should unbond the given transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            const signatories = [{
-              signature, publicKey: data.pubKey
-            }];
-            return newTxn.unbond(signatories);
-          });
-      },
-      validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
-      }
-    };
-
-    test.data = [{
-      input: {
-        // privKey: testAcc.privKey,
-        // pubKey: testAcc.pubKey,
-        privKey: 'skWKMJw3ohL81ACUNFMEzVcfa9GrWyVyQC33FUeRNLSa1MMHshZVgLuxQQPCB8AyCfxZQh98HuLfvqG5zqtVawdnP237bpn',
-        pubKey: 'pjDvQc1rF8HhCAK8L8zu3SJQcKtCMroo1rmRWf8o8m111DexqzX',
-        txnType: 4,
-        txn: {
-          from: {
-            // address: testAcc.address
-            address: 'vaBdTQnKWstzbP9rrMCvPP4rxqLU3PDvKHM',
-            amount: 200
-          },
-          to: {
-            address: testAcc.address,
-            amount: 100
-          }
-        }
-      },
-      validate: () => {
-
-      }
-    }];
-
-    this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
-  });
-
-  it('"permission", should do permission transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            const signatories = [{
-              signature, publicKey: data.pubKey
-            }];
-            return newTxn.permission(signatories);
-          });
-      },
-      validate: (res) => {
-        expect(res.statusCode).to.equal(200);
-        expect(res.body.error).to.equal(undefined);
-        expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
-      }
-    };
-
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        txnType: 5,
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 100
-          },
-          to: {
-            address: 'acG9u2dcdu1kZoSEyxuGU7aWv3sHA8KNebo',
-            amount: 0
-          },
-          permissions: '0x4',
-          set: true
-        }
-      },
-      validate: () => {
-
-      }
-    }];
-
-    this.timeout(5000);
-    setTimeout(function () { glOrWd.runTest(test, done); }, 2000);
-  });
-
-  it('"broadcast", should broadcast the transaction', function (done) {
-    const test = {
-      function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            newTxn.signatories = [{ signature, publicKey: data.pubKey }];
-
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.sign(data.pvK)
+          .then(() => {
             return newTxn.broadcast();
           })
       },
@@ -438,137 +78,152 @@ describe.skip('Intergallactic.Transaction', function () {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
-    }
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        txnType: 1,
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10
-          }]
-        }
-      }
-    }];
-
+    };
+    test.data = txnTd.broadcast.ok;
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    glOrWd.runTest(test, done);
   });
 
-  it.skip('"signNBroadcast", should broadcast the transaction', function (done) {
+  it('"send", should be able to broadcast "SEND" transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.signNBroadcast(data.privKey);
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.send(data.pvK)
       },
       validate: (res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.error).to.equal(undefined);
         expect(res.body.result).to.be.an('object');
-        expect(res.body.result.TxHash).to.be.a('string');
-        expect(res.body.result.TxHash.length).to.equal(28);
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
-
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        pubKey: testAcc.pubKey,
-        txnType: 2,
-        txn: {
-          from: {
-            address: testAcc.address,
-            amount: 10
-          },
-          to: {
-            address: '',
-            amount: 10
-          },
-          gasLimit: 1,
-          data: '010203' // currently require an input of byte array
-        }
-      }
-    }]
 
     this.timeout(10000);
-    setTimeout(function () { glOrWd.runTest(test, done) }, 5000);
+    test.data = txnTd.send.ok;
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it('doing multiple "signSync" should return signature without error', function (done) {
+  it.skip('"call", be able to broadcast "CALL" transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, data.opt);
-        newTxn.signSync(data.privKey);
-        return newTxn.signSync(data.privKey);
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.call(data.pvK)
       },
       validate: (res) => {
-        expect(res).to.be.a('string');
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
-    test.data = [{
-      input: {
-        privKey: testAcc.privKey,
-        opt: {
-          type: 1,
-          chainId: 'test-chain-5bc7',
-          sequence: 300
-        },
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acQUFGxsXVPSd6vbAceSkURnWhYhApE9VRe',
-            amount: 10
-          }]
-        }
-      }
-    }]
 
-    glOrWd.runTest(test, done);
+    this.timeout(10000);
+    test.data = txnTd.call.ok;
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it('doing multiple "sign" should return signature without error', function (done){
+  it('"bond", be able to broadcast "BOND" transaction', function (done) {
     const test = {
       function: (data) => {
-        const newTxn = new igc.Transaction(data.txn, { type: data.txnType });
-        return newTxn.sign(data.privKey)
-          .then(signature => {
-            return newTxn.sign(data.privKey)
-          });
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.bond(data.pvK)
       },
       validate: (res) => {
-        expect(res).to.be.a('string');
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
       }
     };
-    test.data = [{
-      // send transaction data
-      input: {
-        privKey: testAcc.privKey,
-        txnType: 1,
-        txn: {
-          from: [{
-            address: testAcc.address,
-            amount: 10
-          }],
-          to: [{
-            address: 'acWmVcNrHzxBF8L25vdiKLsz664ZGkYmPRj',
-            amount: 10
-          }]
-        }
-      }
-    }]
 
-    glOrWd.runTest(test, done);
-  })
+    this.timeout(10000);
+    test.data = txnTd.bond.ok;
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
+  });
+
+  it('"unbond", be able to broadcast "UNBOND" transaction', function (done) {
+    const test = {
+      function: (data) => {
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.unbond(data.pvK)
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
+      }
+    };
+
+    this.timeout(10000);
+    test.data = txnTd.unbond.ok;
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
+  });
+
+  it('"permission", be able to broadcast "PERMISSION" transaction', function (done) {
+    const test = {
+      function: (data) => {
+        const newTxn = new igc.Transaction(data.txn);
+        return newTxn.permission(data.pvK)
+      },
+      validate: (res) => {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.error).to.equal(undefined);
+        expect(res.body.result).to.be.an('object');
+        expect(res.body.result.hash).to.be.a('string');
+        expect(res.body.result.hash.length).to.equal(64);
+        expect(res.body.result.height).to.be.a('number');
+      }
+    };
+
+    this.timeout(10000);
+    test.data = txnTd.permission.ok;
+    setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
+  });
 });
+
+describe('Intergallactic.Transaction Negative Scenario', function () {
+  const igc = new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+
+  it('multiple "sign", should not throw error', function (done) {
+    const test = {
+      function: (data) => {
+        const txn = new igc.Transaction(data.txn);
+        return txn.sign(data.pvK)
+          .then(() => { return txn.sign(data.pvK) });
+      },
+      validate: (res) => {
+
+      }
+    };
+    test.data = txnTd.sign.ok;
+    glOrWd.runTest(test, done);
+  });
+
+  it('multiple "signSync", should not throw error', function (done) {
+    const test = {
+      function: (data) => {
+        const newTxn = new igc.Transaction(data.txn);
+        newTxn.signSync(data.pvK);
+        return newTxn.signSync(data.pvK);
+      },
+      validate: (res) => {
+
+      }
+    };
+    test.data = txnTd.signSync.ok;
+    glOrWd.runTest(test, done);
+  });
+})
