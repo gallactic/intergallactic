@@ -103,6 +103,7 @@ _txnTd.call = {
       txn: {
         to: '',
         gasLimit: 1,
+        amount: 0,
         data: '010203' // currently require an input of byte array
       }
     }

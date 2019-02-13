@@ -109,7 +109,7 @@ describe('Intergallactic.Transaction Positive Scenario', () => {
     setTimeout(function () { glOrWd.runTest(test, done) }, 2000);
   });
 
-  it.skip('"call", be able to broadcast "CALL" transaction', function (done) {
+  it('"call", be able to broadcast "CALL" transaction', function (done) {
     const test = {
       function: (data) => {
         const newTxn = new igc.Transaction(data.txn);
