@@ -9,6 +9,11 @@ glOrWd.expect = chai.expect;
 glOrWd.tnet = 'http://127.0.0.1:1337/rpc';
 glOrWd.Intergallactic = Intergallactic;
 glOrWd.BigNumber = BigNumber;
+glOrWd.testAcc = {
+  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
+  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
+  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
+}
 
 /**
  * To do test in a waterfall sequence manner for asynchronous tests that using promise

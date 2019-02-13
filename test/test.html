@@ -17,12 +17,17 @@
   <script>mocha.setup('bdd')</script>
   <!-- Intergallactic library -->
   <script src="../dist/intergallactic.min.js"></script>
+
+  <!-- load init file -->
+  <script src="intergallactic.test.js"></script>
+
   <!-- load all test data -->
   <script src="utils/common.td.js"></script>
   <script src="utils/conversion.td.js"></script>
+  <script src="intergallactic/contract.td.js"></script>
+  <script src="intergallactic/transaction.td.js"></script>
 
   <!-- test files -->
-  <script src="intergallactic.test.js"></script>
   <script src="intergallactic/account.test.js"></script>
   <script src="intergallactic/gallactic.test.js"></script>
   <script src="intergallactic/transaction.test.js"></script>

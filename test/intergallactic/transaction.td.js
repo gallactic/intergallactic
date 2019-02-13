@@ -7,11 +7,7 @@ var BigNumber = glOrWd.BigNumber;
 var errorMessage;
 var _txnTd = {};
 
-const testAcc = {
-  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
-  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
-  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
-}
+var testAcc = glOrWd.testAcc;
 
 _txnTd.sign = {
   ok: [{
