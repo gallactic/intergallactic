@@ -1,12 +1,18 @@
 'use strict';
 
+var BigNumber = typeof window !== 'undefined' ? window.BigNumber : require('bignumber.js');
 var Intergallactic = typeof window !== 'undefined' ? window.Intergallactic : require('../index');
-var expect = typeof window !== 'undefined' ? window.expect : require('chai').expect;
+var chai = typeof window !== 'undefined' ? window : require('chai');
 var glOrWd = (typeof window !== 'undefined' ? window : global);
-glOrWd.tnet = 'http://192.168.0.10:1338/rpc';
 
-function instantiateIGC () {
-  return new Intergallactic({ url: 'http://54.95.41.253:1337/rpc', protocol: 'jsonrpc' });
+glOrWd.expect = chai.expect;
+glOrWd.tnet = 'http://127.0.0.1:1337/rpc';
+glOrWd.Intergallactic = Intergallactic;
+glOrWd.BigNumber = BigNumber;
+glOrWd.testAcc = {
+  address: 'acFVrNat8Y8Evid4fcJzN5KxyEAyuHS6Tuu',
+  privKey: 'ski47BSAmY6PJ9KMHXHMzk7tG8nXTJaKKF2BTRPzmjJ3NAzy1HxMAz336JiN7N8KzF786T2mptHHbBY5fmFeoaNukokkF66',
+  pubKey: 'pkCogxsiXdTj9yn62cXN6L5NHwcrBfS8N2bYhob4HTPDExJfWpD'
 }
 
 /**
@@ -55,6 +61,10 @@ glOrWd.runTest = function (test, done, count = 0) {
   }
 };
 
+function instantiateIGC () {
+  return new Intergallactic({ url: glOrWd.tnet, protocol: 'jsonrpc' });
+}
+
 before('instantiate intergallactic', function () {
   instantiateIGC();
 });
@@ -80,12 +90,16 @@ describe('Intergallactic', function () {
     expect(intergallactic.account).to.be.an('object');
   });
 
-  it('should have "gltc" property', function () {
-    expect(intergallactic.gltc).to.be.an('object');
+  it('should have "gallactic" property', function () {
+    expect(intergallactic.gallactic).to.be.an('object');
   });
 
-  it('should have "Txn" property', function () {
-    expect(intergallactic.Txn).to.be.a('function');
+  it('should have "Contract" property', function () {
+    expect(intergallactic.Contract).to.be.a('function');
+  });
+
+  it('should have "Transaction" property', function () {
+    expect(intergallactic.Transaction).to.be.a('function');
   });
 
   it('should have "utils" property', function () {
@@ -105,7 +119,7 @@ describe('Intergallactic.setConnection', function () {
   const igc = instantiateIGC();
 
   it('should set igc.conn property and return json rpc connection object', function () {
-    expect(igc.setConnection('http://54.95.41.253:1337/rpc', 'jsonrpc')).to.be.an('object');
-    expect(igc.conn.url).to.equal('http://54.95.41.253:1337/rpc');
+    expect(igc.setConnection(glOrWd.tnet, 'jsonrpc')).to.be.an('object');
+    expect(igc.conn.url).to.equal(glOrWd.tnet);
   });
 });
