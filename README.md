@@ -1,4 +1,6 @@
-  [![NPM Version][npm-image]][npm-url]
+Help developers interact with Gallactic blockchain
+
+[![NPM Version][npm-image]][npm-url]
 
 # Intergallactic
 A module for Interacting with `Gallactic` blockchain node. This provides a simple way to communicate with the node.
